@@ -11,6 +11,6 @@ package com.mycompany.trabajoaccdatequipo1;
 public class TrabajoAccDatEquipo1 {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        Metodos.establecerConexion();
     }
 }
