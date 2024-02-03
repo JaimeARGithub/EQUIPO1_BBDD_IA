@@ -39,13 +39,23 @@ public class IasPrompts implements Serializable {
     @ManyToOne
     private Prompts idprompt;
 
+    
+    
+    // CONSTRUCTORES
     public IasPrompts() {
     }
 
-    public IasPrompts(int idregistro) {
+    // LOS REGISTROS DE ESTA ENTIDAD SE CREARÁN E INSERTARÁN EN EL MOMENTO
+    // EN QUE SE VAYAN A INSERTAR LOS PROMPTS
+    public IasPrompts(int idregistro, Ias idia, Prompts idprompt) {
         this.idregistro = idregistro;
+        this.idia = idia;
+        this.idprompt = idprompt;
     }
+    
 
+    
+    // GETTERS Y SETTERS
     public int getIdregistro() {
         return idregistro;
     }
@@ -70,6 +80,9 @@ public class IasPrompts implements Serializable {
         this.idprompt = idprompt;
     }
 
+    
+    
+    // HASHCODE, EQUALS, TOSTRING
     @Override
     public int hashCode() {
         int hash = 7;

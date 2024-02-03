@@ -38,13 +38,23 @@ public class Prompts implements Serializable {
     @OneToMany(mappedBy = "idprompt")
     private Collection<IasPrompts> iasPromptsCollection;
 
+    
+    
+    // CONSTRUCTORES
     public Prompts() {
     }
 
-    public Prompts(int idprompt) {
+    // LÓGICA DE NEGOCIO: AL CREAR UN PROMPT, DEBE IR ASOCIADO A UNA SERIE
+    // DE IAS, MÍNIMO UNA. NO PUEDE HABER PROMPTS SIN IAS.
+    public Prompts(int idprompt, String texto, Collection<IasPrompts> iasPromptsCollection) {
         this.idprompt = idprompt;
+        this.texto = texto;
+        this.iasPromptsCollection = iasPromptsCollection;
     }
+    
 
+    
+    // GETTERS Y SETTERS
     public int getIdprompt() {
         return idprompt;
     }
@@ -69,6 +79,9 @@ public class Prompts implements Serializable {
         this.iasPromptsCollection = iasPromptsCollection;
     }
 
+    
+    
+    // HASHCODE, EQUALS, TOSTRINGS
     @Override
     public int hashCode() {
         int hash = 3;

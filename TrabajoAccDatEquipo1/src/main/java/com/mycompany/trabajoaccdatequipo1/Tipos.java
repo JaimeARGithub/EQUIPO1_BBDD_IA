@@ -41,13 +41,22 @@ public class Tipos implements Serializable {
     @OneToMany(mappedBy = "idtipo")
     private Collection<Ias> iasCollection;
 
+    
+    
+    // CONSTRUCTORES
     public Tipos() {
     }
 
-    public Tipos(int idtipo) {
+    // LÓGICA DE NEGOCIO: LOS TIPOS PUEDEN CREARSE SIN IAS Y ÉSTAS METERSE A POSTERIORI
+    public Tipos(int idtipo, String tipo, String descripción) {
         this.idtipo = idtipo;
+        this.tipo = tipo;
+        this.descripción = descripción;
     }
-
+    
+    
+    
+    // GETTERS Y SETTERS
     public int getIdtipo() {
         return idtipo;
     }
@@ -80,6 +89,9 @@ public class Tipos implements Serializable {
         this.iasCollection = iasCollection;
     }
 
+    
+    
+    // HASHCODE, EQUALS, TOSTRING
     @Override
     public int hashCode() {
         int hash = 3;

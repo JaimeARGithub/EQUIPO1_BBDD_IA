@@ -52,13 +52,29 @@ public class Ias implements Serializable {
     @ManyToOne
     private Tipos idtipo;
 
+    
+    
+    // CONSTRUCTORES
     public Ias() {
     }
 
-    public Ias(int idia) {
+    // LÓGICA DE NEGOCIO: LAS IAS PUEDEN CREARSE SIN PROMPTS TÍPICOS ASOCIADOS,
+    // PERO EN EL MOMENTO DE LA CREACIÓN FORZOSAMENTE TENDRÁN QUE TENER ASOCIADO
+    // UN TIPO DE IA
+    // TODAS LAS IAS SE CREARÁN CON CERO USOS Y NO POPULARIDAD, ELLO IRÁ AUMENTANDO
+    // AUTOMÁTICAMENTE A MEDIDA QUE SE BUSQUEN SUS PROMPTS TÍPICOS ASOCIADOS
+    public Ias(int idia, String nombre, String modelo, Tipos idtipo) {
         this.idia = idia;
+        this.nombre = nombre;
+        this.modelo = modelo;
+        this.usos = 0;
+        this.popularidad = "No popular.";
+        this.idtipo = idtipo;
     }
+    
 
+    
+    // GETTERS Y SETTERS
     public int getIdia() {
         return idia;
     }
@@ -115,6 +131,9 @@ public class Ias implements Serializable {
         this.idtipo = idtipo;
     }
 
+    
+    
+    // HASHCODE, EQUALS, TOSTRING
     @Override
     public int hashCode() {
         int hash = 7;
