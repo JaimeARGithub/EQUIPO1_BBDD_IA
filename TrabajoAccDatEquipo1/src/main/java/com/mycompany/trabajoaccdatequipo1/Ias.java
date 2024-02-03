@@ -6,6 +6,7 @@ package com.mycompany.trabajoaccdatequipo1;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,13 +37,13 @@ public class Ias implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "IDIA")
-    private Short idia;
+    private int idia;
     @Column(name = "NOMBRE")
     private String nombre;
     @Column(name = "MODELO")
     private String modelo;
     @Column(name = "USOS")
-    private Short usos;
+    private int usos;
     @Column(name = "POPULARIDAD")
     private String popularidad;
     @OneToMany(mappedBy = "idia")
@@ -54,15 +55,15 @@ public class Ias implements Serializable {
     public Ias() {
     }
 
-    public Ias(Short idia) {
+    public Ias(int idia) {
         this.idia = idia;
     }
 
-    public Short getIdia() {
+    public int getIdia() {
         return idia;
     }
 
-    public void setIdia(Short idia) {
+    public void setIdia(int idia) {
         this.idia = idia;
     }
 
@@ -82,11 +83,11 @@ public class Ias implements Serializable {
         this.modelo = modelo;
     }
 
-    public Short getUsos() {
+    public int getUsos() {
         return usos;
     }
 
-    public void setUsos(Short usos) {
+    public void setUsos(int usos) {
         this.usos = usos;
     }
 
@@ -116,23 +117,44 @@ public class Ias implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (idia != null ? idia.hashCode() : 0);
+        int hash = 7;
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Ias)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Ias other = (Ias) object;
-        if ((this.idia == null && other.idia != null) || (this.idia != null && !this.idia.equals(other.idia))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final Ias other = (Ias) obj;
+        if (this.idia != other.idia) {
+            return false;
+        }
+        if (this.usos != other.usos) {
+            return false;
+        }
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.modelo, other.modelo)) {
+            return false;
+        }
+        if (!Objects.equals(this.popularidad, other.popularidad)) {
+            return false;
+        }
+        if (!Objects.equals(this.iasPromptsCollection, other.iasPromptsCollection)) {
+            return false;
+        }
+        return Objects.equals(this.idtipo, other.idtipo);
     }
+
+    
 
     @Override
     public String toString() {

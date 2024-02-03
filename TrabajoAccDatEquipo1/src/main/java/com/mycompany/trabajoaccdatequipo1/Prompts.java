@@ -6,6 +6,7 @@ package com.mycompany.trabajoaccdatequipo1;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,7 +32,7 @@ public class Prompts implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "IDPROMPT")
-    private Short idprompt;
+    private int idprompt;
     @Column(name = "TEXTO")
     private String texto;
     @OneToMany(mappedBy = "idprompt")
@@ -40,15 +41,15 @@ public class Prompts implements Serializable {
     public Prompts() {
     }
 
-    public Prompts(Short idprompt) {
+    public Prompts(int idprompt) {
         this.idprompt = idprompt;
     }
 
-    public Short getIdprompt() {
+    public int getIdprompt() {
         return idprompt;
     }
 
-    public void setIdprompt(Short idprompt) {
+    public void setIdprompt(int idprompt) {
         this.idprompt = idprompt;
     }
 
@@ -70,23 +71,32 @@ public class Prompts implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (idprompt != null ? idprompt.hashCode() : 0);
+        int hash = 3;
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Prompts)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Prompts other = (Prompts) object;
-        if ((this.idprompt == null && other.idprompt != null) || (this.idprompt != null && !this.idprompt.equals(other.idprompt))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final Prompts other = (Prompts) obj;
+        if (this.idprompt != other.idprompt) {
+            return false;
+        }
+        if (!Objects.equals(this.texto, other.texto)) {
+            return false;
+        }
+        return Objects.equals(this.iasPromptsCollection, other.iasPromptsCollection);
     }
+
+    
 
     @Override
     public String toString() {

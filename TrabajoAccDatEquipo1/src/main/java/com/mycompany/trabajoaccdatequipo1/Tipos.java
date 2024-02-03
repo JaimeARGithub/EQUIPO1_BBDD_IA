@@ -6,6 +6,7 @@ package com.mycompany.trabajoaccdatequipo1;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +33,7 @@ public class Tipos implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "IDTIPO")
-    private Short idtipo;
+    private int idtipo;
     @Column(name = "TIPO")
     private String tipo;
     @Column(name = "DESCRIPCI\u00d3N")
@@ -43,15 +44,15 @@ public class Tipos implements Serializable {
     public Tipos() {
     }
 
-    public Tipos(Short idtipo) {
+    public Tipos(int idtipo) {
         this.idtipo = idtipo;
     }
 
-    public Short getIdtipo() {
+    public int getIdtipo() {
         return idtipo;
     }
 
-    public void setIdtipo(Short idtipo) {
+    public void setIdtipo(int idtipo) {
         this.idtipo = idtipo;
     }
 
@@ -81,23 +82,35 @@ public class Tipos implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (idtipo != null ? idtipo.hashCode() : 0);
+        int hash = 3;
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Tipos)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Tipos other = (Tipos) object;
-        if ((this.idtipo == null && other.idtipo != null) || (this.idtipo != null && !this.idtipo.equals(other.idtipo))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final Tipos other = (Tipos) obj;
+        if (this.idtipo != other.idtipo) {
+            return false;
+        }
+        if (!Objects.equals(this.tipo, other.tipo)) {
+            return false;
+        }
+        if (!Objects.equals(this.descripción, other.descripción)) {
+            return false;
+        }
+        return Objects.equals(this.iasCollection, other.iasCollection);
     }
+
+    
 
     @Override
     public String toString() {

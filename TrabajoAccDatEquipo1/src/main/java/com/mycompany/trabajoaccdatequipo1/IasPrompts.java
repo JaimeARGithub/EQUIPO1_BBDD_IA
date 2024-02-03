@@ -5,6 +5,7 @@
 package com.mycompany.trabajoaccdatequipo1;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +31,7 @@ public class IasPrompts implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "IDREGISTRO")
-    private Integer idregistro;
+    private int idregistro;
     @JoinColumn(name = "IDIA", referencedColumnName = "IDIA")
     @ManyToOne
     private Ias idia;
@@ -41,15 +42,15 @@ public class IasPrompts implements Serializable {
     public IasPrompts() {
     }
 
-    public IasPrompts(Integer idregistro) {
+    public IasPrompts(int idregistro) {
         this.idregistro = idregistro;
     }
 
-    public Integer getIdregistro() {
+    public int getIdregistro() {
         return idregistro;
     }
 
-    public void setIdregistro(Integer idregistro) {
+    public void setIdregistro(int idregistro) {
         this.idregistro = idregistro;
     }
 
@@ -71,23 +72,32 @@ public class IasPrompts implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (idregistro != null ? idregistro.hashCode() : 0);
+        int hash = 7;
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof IasPrompts)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        IasPrompts other = (IasPrompts) object;
-        if ((this.idregistro == null && other.idregistro != null) || (this.idregistro != null && !this.idregistro.equals(other.idregistro))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final IasPrompts other = (IasPrompts) obj;
+        if (this.idregistro != other.idregistro) {
+            return false;
+        }
+        if (!Objects.equals(this.idia, other.idia)) {
+            return false;
+        }
+        return Objects.equals(this.idprompt, other.idprompt);
     }
+
+    
 
     @Override
     public String toString() {
