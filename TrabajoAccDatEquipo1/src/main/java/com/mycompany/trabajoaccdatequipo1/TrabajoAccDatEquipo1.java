@@ -6,11 +6,15 @@ package com.mycompany.trabajoaccdatequipo1;
 
 /**
  *
- * @author pokem
+ * @author pokem, bacho, lucas
  */
 public class TrabajoAccDatEquipo1 {
 
     public static void main(String[] args) {
         Metodos.establecerConexion();
+        
+        Metodos.insertarDatos();
+        
+        Metodos.cerrarConexion();
     }
 }
