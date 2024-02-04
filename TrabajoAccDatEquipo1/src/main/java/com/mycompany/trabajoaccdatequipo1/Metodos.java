@@ -310,4 +310,44 @@ public class Metodos {
         
         em.getTransaction().commit();
     }
+    
+    /**
+     * Método que permite hacer la modificación de un registro "tipo de IA". Para
+     * que se pueda modificar un registro, EL USUARIO TIENE QUE ESCRIBIR EN TODOS
+     * LOS CAMPOS. SI NO ESTÁN TODOS RELLENOS, MENSAJE DE ERROR.
+     * Tras eso se busca que exista el registro a modificar. Si no existe, 
+     * mensaje de error.
+     * 
+     * @param id id del tipo a modificar
+     * @param nombre nuevo nombre para el tipo
+     * @param desc nueva descripción para el tipo
+     */
+    public static void modificarTipo(String id, String nombre, String desc) {
+        if (id.isEmpty() || id.isBlank() || nombre.isEmpty() || nombre.isBlank() || desc.isEmpty() || desc.isBlank()) {
+            
+            System.out.println("Error en la modificación.");
+            System.out.println("Se deben rellenar todos los campos.");
+            
+        } else {
+            em.getTransaction().begin();
+            
+            int idTipo = Integer.parseInt(id);
+            Tipos tipo = null;
+            
+            tipo = em.find(Tipos.class, idTipo, LockModeType.PESSIMISTIC_READ);
+            if (tipo == null) {
+                
+                System.out.println("No existe el tipo con id " + idTipo + ".");
+                
+            } else {
+                
+                tipo.setTipo(nombre);
+                tipo.setDescripción(desc);
+                System.out.println("Se ha modificado correctamente el tipo con id"  + idTipo + " .");
+                
+            }
+            
+            em.getTransaction().commit();
+        }
+    }
 }
