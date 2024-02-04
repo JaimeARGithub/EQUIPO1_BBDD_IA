@@ -13,7 +13,8 @@ public class TrabajoAccDatEquipo1 {
     public static void main(String[] args) {
         Metodos.establecerConexion();
         
-        Metodos.insertarDatos();
+        //Metodos.insertarDatos();
+        //Metodos.insertarTipo(3, "Generación de audio y música", "Ias empleadas para generar y retransmitir audio, ya sean voces o ruidos, según las especificaciones dadas.");
         
         Metodos.cerrarConexion();
     }

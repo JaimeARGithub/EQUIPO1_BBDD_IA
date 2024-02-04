@@ -6,7 +6,10 @@ package com.mycompany.trabajoaccdatequipo1;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.LockModeType;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -132,6 +135,47 @@ public class Metodos {
         IasPrompts ip18 = new IasPrompts(18, ia6, p6);
         em.persist(ip18);
         
+        
+        em.getTransaction().commit();
+    }
+    
+    /**
+     * Método que permite realizar la inserción de un tipo de ia en la base
+     * de datos.
+     * Antes de realizarse la inserción, se hace una búsqueda en la base de
+     * datos; primero por id y luego por nombre. Si el tipo de IA que se intenta
+     * insertar NO existe, se inserta.
+     * 
+     * @param id id del tipo a insertar
+     * @param nombre nombre del tipo de IA
+     * @param desc descripción de los usos para los que se emplea el tipo de ia
+     */
+    public static void insertarTipo(int id, String nombre, String desc) {
+        em.getTransaction().begin();
+        Tipos tipoBusca = null;
+        
+        // Primero se busca por id; si existe, mensaje de error
+        tipoBusca = em.find(Tipos.class, id, LockModeType.PESSIMISTIC_READ);
+        if (tipoBusca != null) {
+            System.out.println("Ya existe ese tipo en la base de datos.");
+        } else {
+            
+            // Luego se busca por nombre; si existe, mensaje de error; si no, se inserta
+            TypedQuery<Tipos> query = em.createQuery("select t from Tipos t where t.tipo=:NOMBREP", Tipos.class);
+            query.setParameter("NOMBREP", nombre);
+            try {
+                
+                tipoBusca = query.getSingleResult();
+                System.out.println("Ya existe un tipo con ese nombre en la base de datos.");
+                
+            } catch (NoResultException e) {
+                
+                Tipos tipoInsertar = new Tipos(id, nombre, desc);
+                em.persist(tipoInsertar);
+                System.out.println("Tipo insertado con éxito.");
+                
+            }
+        }
         
         em.getTransaction().commit();
     }
