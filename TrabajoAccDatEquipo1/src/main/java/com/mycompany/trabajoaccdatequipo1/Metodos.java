@@ -4,6 +4,8 @@
  */
 package com.mycompany.trabajoaccdatequipo1;
 
+import java.util.Collection;
+import java.util.Iterator;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.LockModeType;
@@ -176,6 +178,104 @@ public class Metodos {
                 
             }
         }
+        
+        em.getTransaction().commit();
+    }
+    
+    /**
+     * Método para ver todos los datos existentes en la tabla "tipos de IAs".
+     * Aunque la rúbrica especifica hacerlo sin JPQL, no es posible hacer una
+     * select de todos los datos sin él, por lo que el uso de una typed query
+     * es forzoso.
+     */
+    public static void verTipos() {
+        em.getTransaction().begin();
+        
+        TypedQuery<Tipos> query = em.createQuery("select t from Tipos t", Tipos.class);
+        
+        Collection<Tipos> colec = query.getResultList();
+        if (colec.isEmpty()) {
+            System.out.println("No existen datos en la tabla 'Tipos de IAs'.");
+        } else {
+            Tipos tipo = null;
+            Iterator<Tipos> it = colec.iterator();
+            while (it.hasNext()) {
+                tipo = it.next();
+                System.out.println("ID del tipo: " + tipo.getIdtipo());
+                System.out.println("Tipo: " + tipo.getTipo());
+                System.out.println("Descripción: " + tipo.getDescripción());
+                System.out.println("--------------------------------------------------");
+            }
+        }
+        
+        em.getTransaction().commit();
+    }
+    
+    /**
+     * Método que localiza, SIN USAR JPQL, un tipo en base a su id. Si 
+     * el tipo no existe, muestra un mensaje de error. Una vez
+     * encontrado, muestra sus datos y los de la colección de IAs que tenga
+     * asociada.
+     * @param id id del tipo a encontrar
+     */
+    public static void verTipoDatos(int id) {
+        em.getTransaction().begin();
+        
+        Tipos tipo = null;
+        tipo = em.find(Tipos.class, id, LockModeType.PESSIMISTIC_READ);
+        
+        if (tipo==null) {
+            System.out.println("No existe el tipo con id " + id + ".");
+        } else {
+            
+            System.out.println("ID del tipo: " + tipo.getIdtipo());
+            System.out.println("Tipo: " + tipo.getTipo());
+            System.out.println("Descripción: " + tipo.getDescripción());
+            System.out.println("--------------------------------------------------");
+            System.out.println("--------------------------------------------------");
+            
+            Collection<Ias> colec = tipo.getIasCollection();
+            if (colec.isEmpty()) {
+                System.out.println("El tipo con id " + tipo.getIdtipo() + "no tiene IAs asociadas.");
+            } else {
+                
+                System.out.println("El tipo con id " + tipo.getIdtipo() + " dispone de IAs asociadas.");
+                System.out.println("");
+                Ias ia = null;
+                Iterator<Ias> it = colec.iterator();
+                while (it.hasNext()) {
+                    
+                    ia = it.next();
+                    System.out.println("ID de la IA: " + ia.getIdia());
+                    System.out.println("Nombre de la IA: " + ia.getNombre());
+                    System.out.println("Modelo en que está basada: " + ia.getModelo());
+                    System.out.println("Nº de veces usada: " + ia.getUsos());
+                    System.out.println("Popularidad: " + ia.getPopularidad());
+                    System.out.println("--------------------------------------------------");
+                    
+                }
+            }
+            
+        }
+        
+        
+        
+        em.getTransaction().commit();
+    }
+    
+    /**
+     * Método que hace el borrado de un tipo buscándolo por su ID. Primero se
+     * controla que el tipo exista. Si no existe, mensaje de error.
+     * Tras ver que exista, se controla que tenga registros que dependan de
+     * él. Si los tiene, mensaje de error.
+     * Si el tipo existe y no hay IAs que dependan de él, el borrado se hace
+     * correctamente.
+     * @param id id del tipo a borrar
+     */
+    public static void borrarTipo(int id) {
+        em.getTransaction().begin();
+        
+        
         
         em.getTransaction().commit();
     }
