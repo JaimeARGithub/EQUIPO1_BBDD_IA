@@ -4,6 +4,7 @@
  */
 package com.mycompany.trabajoaccdatequipo1;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Collection;
 import java.util.Iterator;
 import javax.persistence.EntityManager;
@@ -11,6 +12,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
 /**
@@ -264,6 +266,8 @@ public class Metodos {
     }
     
     /**
+     * LÓGICA DE NEGOCIO: NO PUEDEN BORRARSE REGISTROS DE LOS QUE DEPENDAN OTROS
+     * PRIMERO HABRÁ QUE BORRAR ESOS OTROS REGISTROS DEPENDIENTES
      * Método que hace el borrado de un tipo buscándolo por su ID. Primero se
      * controla que el tipo exista. Si no existe, mensaje de error.
      * Tras ver que exista, se controla que tenga registros que dependan de
@@ -274,7 +278,34 @@ public class Metodos {
      */
     public static void borrarTipo(int id) {
         em.getTransaction().begin();
+        Tipos tipo = null;
         
+        // Se busca el tipo
+        tipo = em.find(Tipos.class, id, LockModeType.PESSIMISTIC_READ);
+        
+        // Si el tipo no existe, mensaje de error
+        if (tipo==null) {
+            System.out.println("No existe el tipo con id " + id + ".");
+        } else {
+            
+            // Antes de hacer el borrado, se verifica que el tipo no tenga registros asociados
+            // Se recoge su lista de IAs asociadas
+            // Si está vacía, el registro se borra correctamente
+            // Si no, mensaje de error para evitar que el usuario borre registros sin querer
+            Collection<Ias> colec = tipo.getIasCollection();
+            
+            // Si la lista está vacía
+            if (colec.isEmpty()) {
+                em.remove(tipo);
+                System.out.println("El tipo con id " + id + " se ha borrado correctamente.");
+            // Si no    
+            } else {
+                System.out.println("No es posible borrar ese registro.");
+                System.out.println("¡¡Existen otros registros que dependen de él!!");
+                System.out.println("Borra esos registros e inténtalo de nuevo.");
+            }
+            
+        }
         
         
         em.getTransaction().commit();
