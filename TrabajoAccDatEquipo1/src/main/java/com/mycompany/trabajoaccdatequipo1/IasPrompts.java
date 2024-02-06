@@ -9,6 +9,7 @@ import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,7 +29,7 @@ import javax.persistence.Table;
 public class IasPrompts implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
+    @Id @GeneratedValue
     @Basic(optional = false)
     @Column(name = "IDREGISTRO")
     private int idregistro;
@@ -49,6 +50,11 @@ public class IasPrompts implements Serializable {
     // EN QUE SE VAYAN A INSERTAR LOS PROMPTS
     public IasPrompts(int idregistro, Ias idia, Prompts idprompt) {
         this.idregistro = idregistro;
+        this.idia = idia;
+        this.idprompt = idprompt;
+    }
+    
+    public IasPrompts(Ias idia, Prompts idprompt) {
         this.idia = idia;
         this.idprompt = idprompt;
     }
