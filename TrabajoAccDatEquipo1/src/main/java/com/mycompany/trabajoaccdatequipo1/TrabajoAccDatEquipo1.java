@@ -36,6 +36,9 @@ public class TrabajoAccDatEquipo1 {
         
         Metodos.deleteIA(1);
         
+        
+        Metodos.deleteIA(1);
+        
         Metodos.cerrarConexion();
     }
 }
