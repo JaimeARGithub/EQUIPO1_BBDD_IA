@@ -15,7 +15,7 @@ public class ModificarPromptsInterfaz extends javax.swing.JFrame {
     /**
      * Creates new form ModificarPromptsInterfaz
      */
-    public ModificarPromptsInterfaz(Frame parent, boolean modal) {
+    public ModificarPromptsInterfaz() {
         // Configura el tamaño, el layout y los componentes necesarios aquí
         setTitle("Modificar");
         setSize(300, 200);

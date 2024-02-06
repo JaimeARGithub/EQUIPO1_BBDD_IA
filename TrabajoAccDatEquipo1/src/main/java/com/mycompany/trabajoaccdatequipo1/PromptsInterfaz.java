@@ -102,7 +102,7 @@ public class PromptsInterfaz extends javax.swing.JFrame {
 
     private void abrirVentanaModificar() {
         // Asume que tu ventana principal se extiende de JFrame
-        ModificarPromptsInterfaz ventanaModificar = new ModificarPromptsInterfaz(this, true);
+        ModificarPromptsInterfaz ventanaModificar = new ModificarPromptsInterfaz();
         ventanaModificar.setLocationRelativeTo(this); // Para centrar respecto a la ventana principal
         ventanaModificar.setVisible(true);
     }
