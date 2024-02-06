@@ -24,9 +24,24 @@ import javax.persistence.TypedQuery;
  */
 public class MetodosLucas {
     
-
+    private void insertarPrompts(int IDIA, int idprompt, String texto){
+        em.getTransaction().begin();
+        
+        Ias ia = em.find(Ias.class,IDIA,LockModeType.PESSIMISTIC_READ);//para comrpobar si la ia existe
+        if(ia!=null){
+            Prompts prompt =  em.find(Prompts.class,idprompt,LockModeType.PESSIMISTIC_READ );// para ver si existe el prompt en caso de que exista la ia 
+            if (prompt != null){
+                
+                Collection<IasPrompts> iasCollection = new Collection<>();
+                
+                Prompts promptDEF = new Prompts(idprompt,texto,iasCollection);
+                
+                
+            }
+        } 
+    }
     
-    private void borrarPromptTipicoIA(int id){
+    public static void borrarPrompt(int id){
         
         em.getTransaction().begin();
         
@@ -52,17 +67,17 @@ public class MetodosLucas {
     }
     
     
-    private void mostrarPromptsYIasAsociadas(int id){
+    public static void mostrarPromptsYIasAsociadas(int id){
         
         Prompts prompt = null;
         TypedQuery<Prompts> query = em.createNamedQuery(
-                "Prompts.findById" , 
+                "Prompts.findByIdprompt" , 
                 Prompts.class);
         query.setParameter("idprompt", id);
         try{
             prompt = query.getSingleResult();
             if(prompt!=null){
-                System.out.println("Prompt: "+prompt.getTexto());
+                System.out.println("Prompt: '"+prompt.getTexto()+"'");
                 System.out.println("Ias en las que se usa: ");
                 
                 Collection<IasPrompts> coleccion = prompt.getIasPromptsCollection();
@@ -79,10 +94,10 @@ public class MetodosLucas {
         }
     }   
     
-    private void mostrarTodosLosPrompts(){
+    public static void mostrarTodosLosPrompts(){
         em.getTransaction().begin();
         
-        TypedQuery<Prompts> query = em.createQuery("SELECT p FROM Prompts u", Prompts.class);
+        TypedQuery<Prompts> query = em.createQuery("SELECT p FROM Prompts p", Prompts.class);
 
         List<Prompts> prompts = query.getResultList();
 

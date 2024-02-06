@@ -20,6 +20,11 @@ public class TrabajoAccDatEquipo1 {
         //Metodos.borrarTipo(2);
         //Metodos.modificarTipo("2", "Cambio de nombre de prueba", "Cambio de descripción de prueba");
         
+        //MetodosLucas.mostrarTodosLosPrompts();
+        //MetodosLucas.borrarPrompt(2); PROBARPROBARPROBARPROBAR
+        MetodosLucas.mostrarPromptsYIasAsociadas(2);
+        
+        
         Metodos.cerrarConexion();
     }
 }

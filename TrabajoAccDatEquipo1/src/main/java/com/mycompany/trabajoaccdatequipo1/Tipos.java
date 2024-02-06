@@ -77,7 +77,7 @@ public class Tipos implements Serializable {
         return descripcion;
     }
 
-    public void setDescripción(String descripcion) {
+    public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
