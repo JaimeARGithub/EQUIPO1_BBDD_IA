@@ -340,11 +340,20 @@ public class Metodos {
         }
     }
 
-    public void deleteIA(int idIa) {
+    public static void deleteIA(int idIa) {
         em.getTransaction().begin();
 
         Ias ia = em.find(Ias.class, idIa);
-        em.remove(ia);
+        if (ia != null) {
+            // Primero eliminamos las relaciones en la tabla intermedia
+            Collection<IasPrompts> iasPromptsCollection = ia.getIasPromptsCollection();
+            for (IasPrompts iasPrompts : iasPromptsCollection) {
+                em.remove(iasPrompts);
+            }
+
+            // Luego eliminamos la IA
+            em.remove(ia);
+        }
 
         em.getTransaction().commit();
     }
@@ -372,13 +381,10 @@ public class Metodos {
             System.out.println("El nombre de la IA ya existe.");
             return;
         }
-        
-        
+
         iaActual.setIdtipo(tipoActual);
         em.persist(iaActual);
         em.getTransaction().commit();
     }
-    
-    
 
 }

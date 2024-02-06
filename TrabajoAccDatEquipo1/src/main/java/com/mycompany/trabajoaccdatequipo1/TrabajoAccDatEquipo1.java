@@ -23,13 +23,19 @@ public class TrabajoAccDatEquipo1 {
         //MetodosLucas.mostrarTodosLosPrompts();
         //MetodosLucas.borrarPrompt(2); PROBARPROBARPROBARPROBAR
         //MetodosLucas.instarPrompts();
-        MetodosLucas.mostrarPromptsYIasAsociadas(2);
+        //MetodosLucas.mostrarPromptsYIasAsociadas(2);
         //Metodos.insertIa(iaActual, tipoActual);
         MetodosLucas.insertarPrompts(1, 13,"OLIOLILLI");
         
         
         //MetodosLucas.mostrarPromptsYIasAsociadas(2);
         //Metodos.insertIa(iaActual, tipoActual);
+        
+        Metodos.deleteIA(1);
+        
+        
+        Metodos.deleteIA(1);
+        
         Metodos.cerrarConexion();
     }
 }
