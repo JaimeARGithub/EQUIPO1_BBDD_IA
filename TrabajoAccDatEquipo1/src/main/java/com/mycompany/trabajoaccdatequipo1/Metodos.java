@@ -353,8 +353,7 @@ public class Metodos {
 
             // Luego eliminamos la IA
             em.remove(ia);
-        }
-        else{
+        } else {
             System.out.println("La Ia no existe");
         }
 
@@ -391,9 +390,9 @@ public class Metodos {
     }
 
     public static void modificarIa(Ias iaActual) {
-        
+
         em.getTransaction().begin();
-        
+
         // Comprobamos si el tipo existe
         Tipos tipo = em.find(Tipos.class, iaActual.getIdtipo().getIdtipo());
         if (tipo == null) {
@@ -425,6 +424,32 @@ public class Metodos {
         ia.setPopularidad(iaActual.getPopularidad());
         ia.setIdtipo(tipo);
         em.persist(ia);
+        em.getTransaction().commit();
+    }
+
+    public static void selectIa(int idIa) {
+        // Iniciar una transacción
+        em.getTransaction().begin();
+
+        // Realizar la consulta
+        TypedQuery<Ias> query = em.createQuery("SELECT i FROM Ias i JOIN FETCH i.iasPromptsCollection WHERE i.idia = :idia", Ias.class);
+        query.setParameter("idia", idIa);
+        Ias ia = query.getSingleResult();
+
+        // Imprimir la información de la IA
+        System.out.println("ID: " + ia.getIdia());
+        System.out.println("Nombre: " + ia.getNombre());
+        System.out.println("Modelo: " + ia.getModelo());
+        System.out.println("Usos: " + ia.getUsos());
+        System.out.println("Popularidad: " + ia.getPopularidad());
+        System.out.println("Tipo: " + ia.getIdtipo().getTipo());
+
+        // Imprimir los prompts asociados
+        for (IasPrompts iasPrompts : ia.getIasPromptsCollection()) {
+            System.out.println("Prompt: " + iasPrompts.getIdprompt().getTexto());
+        }
+
+        // Cerrar la transacción
         em.getTransaction().commit();
     }
 
