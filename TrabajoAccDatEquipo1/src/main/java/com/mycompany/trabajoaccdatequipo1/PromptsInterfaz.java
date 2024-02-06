@@ -34,24 +34,51 @@ public class PromptsInterfaz extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        modificarBoton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        atrasBoton = new javax.swing.JButton();
+        iasAsociadasBoton = new javax.swing.JButton();
+        eliminarBoton = new javax.swing.JButton();
+        añadirBoton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Prompts"));
 
-        jButton1.setText("Modificar prompts");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        modificarBoton.setText("Modificar prompts");
+        modificarBoton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                modificarBotonActionPerformed(evt);
             }
         });
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
+
+        atrasBoton.setText("Atrás");
+        atrasBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atrasBotonActionPerformed(evt);
+            }
+        });
+
+        iasAsociadasBoton.setText("Ver IAs asociadas");
+        iasAsociadasBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                iasAsociadasBotonActionPerformed(evt);
+            }
+        });
+
+        eliminarBoton.setText("Eliminar prompts");
+        eliminarBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarBotonActionPerformed(evt);
+            }
+        });
+
+        añadirBoton.setText("Añadir prompts");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -62,7 +89,16 @@ public class PromptsInterfaz extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(atrasBoton)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(iasAsociadasBoton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(modificarBoton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(eliminarBoton)
+                                .addGap(18, 18, 18)
+                                .addComponent(añadirBoton)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -72,8 +108,14 @@ public class PromptsInterfaz extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(modificarBoton)
+                    .addComponent(iasAsociadasBoton)
+                    .addComponent(eliminarBoton)
+                    .addComponent(añadirBoton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(atrasBoton)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -96,9 +138,21 @@ public class PromptsInterfaz extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void modificarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBotonActionPerformed
         abrirVentanaModificar();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_modificarBotonActionPerformed
+
+    private void atrasBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasBotonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_atrasBotonActionPerformed
+
+    private void iasAsociadasBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iasAsociadasBotonActionPerformed
+       MostrarPromptsIAS.main(null);
+    }//GEN-LAST:event_iasAsociadasBotonActionPerformed
+
+    private void eliminarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBotonActionPerformed
+        EliminarPrompts.main(null);
+    }//GEN-LAST:event_eliminarBotonActionPerformed
 
     private void abrirVentanaModificar() {
         // Asume que tu ventana principal se extiende de JFrame
@@ -143,9 +197,13 @@ public class PromptsInterfaz extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton atrasBoton;
+    private javax.swing.JButton añadirBoton;
+    private javax.swing.JButton eliminarBoton;
+    private javax.swing.JButton iasAsociadasBoton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JButton modificarBoton;
     // End of variables declaration//GEN-END:variables
 }

@@ -72,40 +72,44 @@ public class MetodosLucas {
     }
     
     
-    public static void mostrarPromptsYIasAsociadas(int id){
+    public static String mostrarPromptsYIasAsociadas(int id){
         
+        StringBuilder resultado = new StringBuilder();
         Prompts prompt = null;
         prompt = em.find(Prompts.class, id);
-        try{
-            if(prompt!=null){
-                System.out.println("Prompt: '"+prompt.getTexto()+"'");
-                System.out.println("Ias en las que se usa: ");
-                
+
+        try {
+            if (prompt != null) {
+                resultado.append("Prompt: '").append(prompt.getTexto()).append("'\n");
+                resultado.append("Ias en las que se usa: \n");
+
                 Collection<IasPrompts> coleccion = prompt.getIasPromptsCollection();
                 Iterator<IasPrompts> it = coleccion.iterator();
-                
-                while (it.hasNext()){
+
+                while (it.hasNext()) {
                     IasPrompts iap = it.next();
-                    Ias ia=iap.getIdia();
-                    System.out.println("- "+ia.getNombre());
+                    Ias ia = iap.getIdia();
+                    resultado.append("- ").append(ia.getNombre()).append("\n");
                 }
             }
-        }catch(NoResultException e){
-            System.out.println("No existen usuarios");
+        } catch (NoResultException e) {
+            resultado.append("No existen usuarios\n");
         }
+        return resultado.toString();
     }   
     
     public static String mostrarTodosLosPrompts(){
         em.getTransaction().begin();
         
-        TypedQuery<Prompts> query = em.createQuery("SELECT p FROM Prompts p", Prompts.class);
+        //TypedQuery<Prompts> query = em.createQuery("SELECT p FROM Prompts p", Prompts.class);
+        TypedQuery<Prompts> query = em.createQuery("SELECT p FROM Prompts p ORDER BY p.idprompt ASC", Prompts.class);
         List<Prompts> prompts = query.getResultList();
 
         StringBuilder resultados = new StringBuilder();
 
         if (!prompts.isEmpty()) {
             for (Prompts prompt : prompts) {
-                resultados.append("Prompt: ").append(prompt.getTexto()).append("\n");
+                resultados.append("ID: ").append(prompt.getIdprompt()).append(" Prompt: ").append(prompt.getTexto()).append("\n");
             }
         } else {
             resultados.append("No hay prompts en la base de datos.");

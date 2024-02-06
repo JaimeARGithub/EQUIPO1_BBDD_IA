@@ -4,21 +4,16 @@
  */
 package com.mycompany.trabajoaccdatequipo1;
 
-import java.awt.Frame;
-
 /**
  *
  * @author lucas
  */
-public class ModificarPromptsInterfaz extends javax.swing.JFrame {
+public class EliminarPrompts extends javax.swing.JFrame {
 
     /**
-     * Creates new form ModificarPromptsInterfaz
+     * Creates new form EliminarPrompts
      */
-    public ModificarPromptsInterfaz() {
-        // Configura el tamaño, el layout y los componentes necesarios aquí
-        setTitle("Modificar");
-        setSize(300, 200);
+    public EliminarPrompts() {
         initComponents();
     }
 
@@ -31,47 +26,21 @@ public class ModificarPromptsInterfaz extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        atrasBoton = new javax.swing.JButton();
-        confirmarCambiosBoton = new javax.swing.JButton();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        atrasBoton.setText("Atrás");
-        atrasBoton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                atrasBotonActionPerformed(evt);
-            }
-        });
-
-        confirmarCambiosBoton.setText("Confirmar cambios");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(atrasBoton)
-                .addGap(18, 18, 18)
-                .addComponent(confirmarCambiosBoton)
-                .addContainerGap(173, Short.MAX_VALUE))
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(252, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(atrasBoton)
-                    .addComponent(confirmarCambiosBoton))
-                .addGap(25, 25, 25))
+            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void atrasBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasBotonActionPerformed
-        dispose();
-    }//GEN-LAST:event_atrasBotonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -90,26 +59,24 @@ public class ModificarPromptsInterfaz extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ModificarPromptsInterfaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EliminarPrompts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ModificarPromptsInterfaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EliminarPrompts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ModificarPromptsInterfaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EliminarPrompts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ModificarPromptsInterfaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EliminarPrompts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ModificarPromptsInterfaz().setVisible(true);
+                new EliminarPrompts().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton atrasBoton;
-    private javax.swing.JButton confirmarCambiosBoton;
     // End of variables declaration//GEN-END:variables
 }

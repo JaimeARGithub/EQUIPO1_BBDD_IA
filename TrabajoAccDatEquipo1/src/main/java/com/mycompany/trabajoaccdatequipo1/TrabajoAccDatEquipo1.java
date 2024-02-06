@@ -26,8 +26,8 @@ public class TrabajoAccDatEquipo1 {
         //MetodosLucas.mostrarPromptsYIasAsociadas(2);
         //Metodos.insertIa(iaActual, tipoActual);
         //MetodosLucas.insertarPrompts(1, 13,"OLIOLILLI");
-        String f = MetodosLucas.mostrarTodosLosPrompts();
-        System.out.println(f);
+        //String f = MetodosLucas.mostrarTodosLosPrompts();
+        //System.out.println(f);
         //MetodosLucas.borrarPrompt(2); PROBARPROBARPROBARPROBAR
         //MetodosLucas.instarPrompts();
         //MetodosLucas.insertarPrompts(2, 13,"OLIOLILLI");
@@ -61,7 +61,7 @@ public class TrabajoAccDatEquipo1 {
                 break;
             case 1:
                 // Acción para la opción 2
-                System.out.println("Seleccionaste la opción 2");
+                PromptsInterfaz.main(null);
                 break;
             case 2:
                 // Acción para la opción 3
