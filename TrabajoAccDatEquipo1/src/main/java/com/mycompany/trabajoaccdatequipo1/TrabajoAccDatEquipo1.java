@@ -20,12 +20,26 @@ public class TrabajoAccDatEquipo1 {
         //Metodos.verTipoDatos(2);
         //Metodos.borrarTipo(2);
         //Metodos.modificarTipo("2", "Cambio de nombre de prueba", "Cambio de descripción de prueba");
+<<<<<<< Updated upstream
         //MetodosLucas.mostrarTodosLosPrompts();
         //MetodosLucas.borrarPrompt(2); PROBARPROBARPROBARPROBAR
         //MetodosLucas.instarPrompts();
         //MetodosLucas.mostrarPromptsYIasAsociadas(2);
         //Metodos.insertIa(iaActual, tipoActual);
         //MetodosLucas.insertarPrompts(1, 13,"OLIOLILLI");
+=======
+        
+        String f = MetodosLucas.mostrarTodosLosPrompts();
+        System.out.println(f);
+        //MetodosLucas.borrarPrompt(2); PROBARPROBARPROBARPROBAR
+        //MetodosLucas.instarPrompts();
+        //MetodosLucas.insertarPrompts(2, 13,"OLIOLILLI");
+        //MetodosLucas.mostrarPromptsYIasAsociadas(2);
+        //Metodos.insertIa(iaActual, tipoActual);
+       
+        
+        
+>>>>>>> Stashed changes
         //MetodosLucas.mostrarPromptsYIasAsociadas(2);
         //Metodos.insertIa(iaActual, tipoActual);
         //Metodos.deleteIA(20);
