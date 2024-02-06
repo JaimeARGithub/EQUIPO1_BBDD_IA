@@ -20,20 +20,10 @@ public class TrabajoAccDatEquipo1 {
         //Metodos.borrarTipo(2);
         //Metodos.modificarTipo("2", "Cambio de nombre de prueba", "Cambio de descripción de prueba");
         
-        Ias iaActual = new Ias();
-        iaActual.setIdia(8);
-        iaActual.setNombre("IA1");
-        iaActual.setModelo("Modelo1");
-        iaActual.setUsos(0);
-        iaActual.setPopularidad("Alta");
-
-        Tipos tipoActual = new Tipos();
-        tipoActual.setIdtipo(2);
-        tipoActual.setTipo("Tipo1");
-        tipoActual.setDescripción("Descripcion1");
-        
+        //MetodosLucas.mostrarTodosLosPrompts();
+        //MetodosLucas.borrarPrompt(2); PROBARPROBARPROBARPROBAR
+        MetodosLucas.mostrarPromptsYIasAsociadas(2);
         Metodos.insertIa(iaActual, tipoActual);
-        
         Metodos.cerrarConexion();
     }
 }
