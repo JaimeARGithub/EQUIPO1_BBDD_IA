@@ -24,13 +24,13 @@ import javax.persistence.TypedQuery;
  */
 public class MetodosLucas {
     
-    private void insertarPrompts(int IDIA, int idprompt, String texto){
+    public static void insertarPrompts(int IDIA, int idprompt, String texto){
         em.getTransaction().begin();   
         
         Ias ia = em.find(Ias.class,IDIA,LockModeType.PESSIMISTIC_READ);//para comrpobar si la ia existe
         if(ia!=null){
             Prompts prompt =  em.find(Prompts.class,idprompt,LockModeType.PESSIMISTIC_READ );// para ver si existe el prompt en caso de que exista la ia 
-            if (prompt != null){ 
+            if (prompt == null){ 
                 Prompts promptDEF = new Prompts(idprompt,texto,null);
                 em.persist(promptDEF);
                 IasPrompts iaps = new IasPrompts(ia,prompt);
