@@ -31,11 +31,11 @@ public class TrabajoAccDatEquipo1 {
         //Metodos.deleteIA(20);
         //Metodos.modificarIa(iaActual);
         
-        Metodos.selectIa(1);
+        //Metodos.selectIa(1);
         
-        //interfaz();
+        interfaz();
         
-        Metodos.cerrarConexion();
+        
     }
 
     public static void interfaz() {

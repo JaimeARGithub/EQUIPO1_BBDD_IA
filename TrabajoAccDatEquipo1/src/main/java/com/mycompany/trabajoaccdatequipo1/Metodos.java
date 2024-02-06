@@ -427,18 +427,24 @@ public class Metodos {
         em.getTransaction().commit();
     }
 
-    public static void selectAllIa() {
+    public static String selectAllIa() {
+        StringBuilder result = new StringBuilder();
+
         // Realizar la consulta
         TypedQuery<Ias> query = em.createQuery("SELECT i FROM Ias i", Ias.class);
         Collection<Ias> ias = query.getResultList();
 
         for (Ias ia : ias) {
-            System.out.println("ID: " + ia.getIdia());
-            System.out.println("Nombre: " + ia.getNombre());
-            System.out.println("Modelo: " + ia.getModelo());
-            System.out.println("Usos: " + ia.getUsos());
-            System.out.println("Popularidad: " + ia.getPopularidad());
+            // Construir la información de la Ia y agregarla a la StringBuilder
+            result.append("ID: ").append(ia.getIdia()).append("\n");
+            result.append("Nombre: ").append(ia.getNombre()).append("\n");
+            result.append("Modelo: ").append(ia.getModelo()).append("\n");
+            result.append("Usos: ").append(ia.getUsos()).append("\n");
+            result.append("Popularidad: ").append(ia.getPopularidad()).append("\n");
+            result.append("\n"); // Agregar una línea en blanco entre cada Ia
         }
+
+        return result.toString();
     }
     
     public static void selectIa(int idIa){
