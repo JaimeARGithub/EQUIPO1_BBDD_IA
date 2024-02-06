@@ -33,6 +33,7 @@ public class PromptsInterfaz extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        scrollPane1 = new java.awt.ScrollPane();
         jPanel1 = new javax.swing.JPanel();
         modificarBoton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -205,5 +206,6 @@ public class PromptsInterfaz extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton modificarBoton;
+    private java.awt.ScrollPane scrollPane1;
     // End of variables declaration//GEN-END:variables
 }
