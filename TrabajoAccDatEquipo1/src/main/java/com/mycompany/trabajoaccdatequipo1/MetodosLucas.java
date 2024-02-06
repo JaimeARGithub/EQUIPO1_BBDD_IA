@@ -29,11 +29,12 @@ public class MetodosLucas {
         
         Ias ia = em.find(Ias.class,IDIA,LockModeType.PESSIMISTIC_READ);//para comrpobar si la ia existe
         if(ia!=null){
-            Prompts prompt =  em.find(Prompts.class,idprompt,LockModeType.PESSIMISTIC_READ );// para ver si existe el prompt en caso de que exista la ia 
+            Prompts prompt = null;
+            prompt =  em.find(Prompts.class,idprompt,LockModeType.PESSIMISTIC_READ );// para ver si existe el prompt en caso de que exista la ia 
             if (prompt == null){ 
                 Prompts promptDEF = new Prompts(idprompt,texto,null);
                 em.persist(promptDEF);
-                IasPrompts iaps = new IasPrompts(ia,prompt);
+                IasPrompts iaps = new IasPrompts(null,null);
                 em.persist(iaps);
             } else {
                 System.out.println("El prompt ya existe");
@@ -41,6 +42,8 @@ public class MetodosLucas {
         } else {
             System.out.println("La IA no existe");
         }
+        
+        em.getTransaction().commit();
     }
     
     public static void borrarPrompt(int id){
@@ -92,21 +95,24 @@ public class MetodosLucas {
         }
     }   
     
-    public static void mostrarTodosLosPrompts(){
+    public static String mostrarTodosLosPrompts(){
         em.getTransaction().begin();
         
         TypedQuery<Prompts> query = em.createQuery("SELECT p FROM Prompts p", Prompts.class);
-
         List<Prompts> prompts = query.getResultList();
+
+        StringBuilder resultados = new StringBuilder();
 
         if (!prompts.isEmpty()) {
             for (Prompts prompt : prompts) {
-                System.out.println("Prompt: " + prompt.getTexto());
+                resultados.append("Prompt: ").append(prompt.getTexto()).append("\n");
             }
         } else {
-            System.out.println("No hay prompts en la base de datos.");
+            resultados.append("No hay prompts en la base de datos.");
         }
-        
+
         em.getTransaction().commit();
+
+        return resultados.toString();
     }
 }
