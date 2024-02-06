@@ -331,7 +331,7 @@ public class Metodos {
             } else {
 
                 tipo.setTipo(nombre);
-                tipo.setDescripción(desc);
+                tipo.setDescripcion(desc);
                 System.out.println("Se ha modificado correctamente el tipo con id" + idTipo + " .");
 
             }

@@ -10,6 +10,7 @@ import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -30,7 +31,7 @@ import javax.persistence.Table;
 public class Tipos implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
+    @Id @GeneratedValue
     @Basic(optional = false)
     @Column(name = "IDTIPO")
     private int idtipo;
@@ -50,6 +51,11 @@ public class Tipos implements Serializable {
     // LÓGICA DE NEGOCIO: LOS TIPOS PUEDEN CREARSE SIN IAS Y ÉSTAS METERSE A POSTERIORI
     public Tipos(int idtipo, String tipo, String descripcion) {
         this.idtipo = idtipo;
+        this.tipo = tipo;
+        this.descripcion = descripcion;
+    }
+    
+    public Tipos(String tipo, String descripcion) {
         this.tipo = tipo;
         this.descripcion = descripcion;
     }

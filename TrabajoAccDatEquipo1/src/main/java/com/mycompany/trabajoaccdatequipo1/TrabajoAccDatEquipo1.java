@@ -24,7 +24,7 @@ public class TrabajoAccDatEquipo1 {
         //MetodosLucas.borrarPrompt(2); PROBARPROBARPROBARPROBAR
         //MetodosLucas.instarPrompts();
         MetodosLucas.mostrarPromptsYIasAsociadas(2);
-        Metodos.insertIa(iaActual, tipoActual);
+        //Metodos.insertIa(iaActual, tipoActual);
         Metodos.cerrarConexion();
     }
 }

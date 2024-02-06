@@ -10,6 +10,7 @@ import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -29,7 +30,7 @@ import javax.persistence.Table;
 public class Prompts implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
+    @Id @GeneratedValue
     @Basic(optional = false)
     @Column(name = "IDPROMPT")
     private int idprompt;
@@ -48,6 +49,11 @@ public class Prompts implements Serializable {
     // DE IAS, MÍNIMO UNA. NO PUEDE HABER PROMPTS SIN IAS.
     public Prompts(int idprompt, String texto, Collection<IasPrompts> iasPromptsCollection) {
         this.idprompt = idprompt;
+        this.texto = texto;
+        this.iasPromptsCollection = iasPromptsCollection;
+    }
+    
+    public Prompts(String texto, Collection<IasPrompts> iasPromptsCollection) {
         this.texto = texto;
         this.iasPromptsCollection = iasPromptsCollection;
     }

@@ -10,6 +10,7 @@ import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -34,7 +35,7 @@ import javax.persistence.Table;
 public class Ias implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
+    @Id @GeneratedValue
     @Basic(optional = false)
     @Column(name = "IDIA")
     private int idia;
@@ -65,6 +66,15 @@ public class Ias implements Serializable {
     // AUTOMÁTICAMENTE A MEDIDA QUE SE BUSQUEN SUS PROMPTS TÍPICOS ASOCIADOS
     public Ias(int idia, String nombre, String modelo, Tipos idtipo) {
         this.idia = idia;
+        this.nombre = nombre;
+        this.modelo = modelo;
+        this.usos = 0;
+        this.popularidad = "No popular.";
+        this.idtipo = idtipo;
+    }
+    
+    
+    public Ias(String nombre, String modelo, Tipos idtipo) {
         this.nombre = nombre;
         this.modelo = modelo;
         this.usos = 0;
