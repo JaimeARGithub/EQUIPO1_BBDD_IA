@@ -427,30 +427,49 @@ public class Metodos {
         em.getTransaction().commit();
     }
 
-    public static void selectIa(int idIa) {
-        // Iniciar una transacción
-        em.getTransaction().begin();
-
+    public static void selectAllIa() {
         // Realizar la consulta
-        TypedQuery<Ias> query = em.createQuery("SELECT i FROM Ias i JOIN FETCH i.iasPromptsCollection WHERE i.idia = :idia", Ias.class);
-        query.setParameter("idia", idIa);
-        Ias ia = query.getSingleResult();
+        TypedQuery<Ias> query = em.createQuery("SELECT i FROM Ias i", Ias.class);
+        Collection<Ias> ias = query.getResultList();
 
-        // Imprimir la información de la IA
-        System.out.println("ID: " + ia.getIdia());
-        System.out.println("Nombre: " + ia.getNombre());
-        System.out.println("Modelo: " + ia.getModelo());
-        System.out.println("Usos: " + ia.getUsos());
-        System.out.println("Popularidad: " + ia.getPopularidad());
-        System.out.println("Tipo: " + ia.getIdtipo().getTipo());
-
-        // Imprimir los prompts asociados
-        for (IasPrompts iasPrompts : ia.getIasPromptsCollection()) {
-            System.out.println("Prompt: " + iasPrompts.getIdprompt().getTexto());
+        for (Ias ia : ias) {
+            System.out.println("ID: " + ia.getIdia());
+            System.out.println("Nombre: " + ia.getNombre());
+            System.out.println("Modelo: " + ia.getModelo());
+            System.out.println("Usos: " + ia.getUsos());
+            System.out.println("Popularidad: " + ia.getPopularidad());
         }
-
-        // Cerrar la transacción
-        em.getTransaction().commit();
     }
+    
+    public static void selectIa(int idIa){
+        Ias ia = em.find(Ias.class, idIa);
 
+        if (ia != null) {
+            System.out.println("ID: " + ia.getIdia());
+            System.out.println("    Nombre: " + ia.getNombre());
+            System.out.println("    Modelo: " + ia.getModelo());
+            System.out.println("    Usos: " + ia.getUsos());
+            System.out.println("    Popularidad: " + ia.getPopularidad());
+
+            // Obtener el tipo de esta IA
+            Tipos tipo = ia.getIdtipo();
+            System.out.println("Tipo: " + tipo.getTipo());
+            System.out.println("    Descripción del Tipo: " + tipo.getDescripcion());
+
+            // Obtener la colección de prompts asociados a esta IA
+            Collection<IasPrompts> prompts = ia.getIasPromptsCollection();
+            System.out.println("Prompts asociados:");
+            for (IasPrompts prompt : prompts) {
+                System.out.println("    ID del Prompt: " + prompt.getIdprompt());
+                System.out.println("        Texto del Prompt: " + prompt.getIdprompt().getTexto());
+                // Agrega cualquier otra información que desees mostrar sobre los prompts
+            }
+        } else {
+            System.out.println("No se encontró ninguna IA con el ID proporcionado.");
+        }
+    }
+    
+    
+    
+    
 }
