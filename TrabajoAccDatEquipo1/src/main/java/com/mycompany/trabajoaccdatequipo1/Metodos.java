@@ -205,7 +205,7 @@ public class Metodos {
                 tipo = it.next();
                 System.out.println("ID del tipo: " + tipo.getIdtipo());
                 System.out.println("Tipo: " + tipo.getTipo());
-                System.out.println("Descripción: " + tipo.getDescripción());
+                System.out.println("Descripción: " + tipo.getDescripcion());
                 System.out.println("--------------------------------------------------");
             }
         }
@@ -232,7 +232,7 @@ public class Metodos {
             
             System.out.println("ID del tipo: " + tipo.getIdtipo());
             System.out.println("Tipo: " + tipo.getTipo());
-            System.out.println("Descripción: " + tipo.getDescripción());
+            System.out.println("Descripción: " + tipo.getDescripcion());
             System.out.println("--------------------------------------------------");
             System.out.println("--------------------------------------------------");
             

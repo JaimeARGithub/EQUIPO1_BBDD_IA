@@ -26,7 +26,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "Tipos.findAll", query = "SELECT t FROM Tipos t"),
     @NamedQuery(name = "Tipos.findByIdtipo", query = "SELECT t FROM Tipos t WHERE t.idtipo = :idtipo"),
     @NamedQuery(name = "Tipos.findByTipo", query = "SELECT t FROM Tipos t WHERE t.tipo = :tipo"),
-    @NamedQuery(name = "Tipos.findByDescripci\u00f3n", query = "SELECT t FROM Tipos t WHERE t.descripci\u00f3n = :descripci\u00f3n")})
+    @NamedQuery(name = "Tipos.findByDescripcion", query = "SELECT t FROM Tipos t WHERE t.descripcion = :descripcion")})
 public class Tipos implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,8 +36,8 @@ public class Tipos implements Serializable {
     private int idtipo;
     @Column(name = "TIPO")
     private String tipo;
-    @Column(name = "DESCRIPCI\u00d3N")
-    private String descripción;
+    @Column(name = "DESCRIPCION")
+    private String descripcion;
     @OneToMany(mappedBy = "idtipo")
     private Collection<Ias> iasCollection;
 
@@ -48,10 +48,10 @@ public class Tipos implements Serializable {
     }
 
     // LÓGICA DE NEGOCIO: LOS TIPOS PUEDEN CREARSE SIN IAS Y ÉSTAS METERSE A POSTERIORI
-    public Tipos(int idtipo, String tipo, String descripción) {
+    public Tipos(int idtipo, String tipo, String descripcion) {
         this.idtipo = idtipo;
         this.tipo = tipo;
-        this.descripción = descripción;
+        this.descripcion = descripcion;
     }
     
     
@@ -73,12 +73,12 @@ public class Tipos implements Serializable {
         this.tipo = tipo;
     }
 
-    public String getDescripción() {
-        return descripción;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDescripción(String descripción) {
-        this.descripción = descripción;
+    public void setDescripción(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public Collection<Ias> getIasCollection() {
@@ -116,7 +116,7 @@ public class Tipos implements Serializable {
         if (!Objects.equals(this.tipo, other.tipo)) {
             return false;
         }
-        if (!Objects.equals(this.descripción, other.descripción)) {
+        if (!Objects.equals(this.descripcion, other.descripcion)) {
             return false;
         }
         return Objects.equals(this.iasCollection, other.iasCollection);
