@@ -354,6 +354,9 @@ public class Metodos {
             // Luego eliminamos la IA
             em.remove(ia);
         }
+        else{
+            System.out.println("La Ia no existe");
+        }
 
         em.getTransaction().commit();
     }

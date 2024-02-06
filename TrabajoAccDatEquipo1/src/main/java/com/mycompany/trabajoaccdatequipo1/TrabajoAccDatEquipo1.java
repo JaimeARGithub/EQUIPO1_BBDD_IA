@@ -25,19 +25,16 @@ public class TrabajoAccDatEquipo1 {
         //MetodosLucas.instarPrompts();
         //MetodosLucas.mostrarPromptsYIasAsociadas(2);
         //Metodos.insertIa(iaActual, tipoActual);
-        MetodosLucas.insertarPrompts(1, 13,"OLIOLILLI");
+        //MetodosLucas.insertarPrompts(1, 13,"OLIOLILLI");
         
         
         //MetodosLucas.mostrarPromptsYIasAsociadas(2);
         //Metodos.insertIa(iaActual, tipoActual);
         
-        Metodos.deleteIA(1);
+        //Metodos.deleteIA(20);
+
+        //Metodos.modificarIa(iaActual);
         
-        
-        Metodos.deleteIA(1);
-        
-        
-        Metodos.deleteIA(1);
         
         Metodos.cerrarConexion();
     }
