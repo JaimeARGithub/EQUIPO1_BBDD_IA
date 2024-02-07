@@ -4,6 +4,8 @@
  */
 package com.mycompany.trabajoaccdatequipo1;
 
+import static com.mycompany.trabajoaccdatequipo1.TrabajoAccDatEquipo1.interfaz;
+
 /**
  *
  * @author lucas
@@ -144,7 +146,8 @@ public class PromptsInterfaz extends javax.swing.JFrame {
     }//GEN-LAST:event_modificarBotonActionPerformed
 
     private void atrasBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasBotonActionPerformed
-        // TODO add your handling code here:
+        dispose();
+        interfaz();
     }//GEN-LAST:event_atrasBotonActionPerformed
 
     private void iasAsociadasBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iasAsociadasBotonActionPerformed
