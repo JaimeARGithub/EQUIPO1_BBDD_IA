@@ -28,8 +28,8 @@ public class TrabajoAccDatEquipo1 {
         //MetodosLucas.insertarPrompts(1, 13,"OLIOLILLI");
         //String f = MetodosLucas.mostrarTodosLosPrompts();
         //System.out.println(f);
-        //MetodosLucas.borrarPrompt(2); PROBARPROBARPROBARPROBAR
-        //MetodosLucas.instarPrompts();
+        MetodosLucas.borrarPrompt(7);
+        //MetodosLucas.insertarPrompts(4, "ESZRDXTCFGVHBJN");
         //MetodosLucas.insertarPrompts(2, 13,"OLIOLILLI");
         //MetodosLucas.mostrarPromptsYIasAsociadas(2);
         //Metodos.insertIa(iaActual, tipoActual);
@@ -43,7 +43,7 @@ public class TrabajoAccDatEquipo1 {
         
         //Metodos.selectIa(1);
         
-        interfaz();
+        //interfaz();
         
         //System.out.println(Metodos.autoIdTipo());
         //System.out.println(Metodos.autoIdIA());

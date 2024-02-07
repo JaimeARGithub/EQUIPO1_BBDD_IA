@@ -57,6 +57,8 @@ public class MetodosLucas {
         }
         
         em.remove(prompt);
+        
+        em.getTransaction().commit();
     }
     
     
