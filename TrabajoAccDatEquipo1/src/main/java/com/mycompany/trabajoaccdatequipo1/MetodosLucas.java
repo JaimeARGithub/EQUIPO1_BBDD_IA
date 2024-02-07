@@ -52,8 +52,8 @@ public class MetodosLucas {
         
         Collection<IasPrompts> colec = prompt.getIasPromptsCollection();
         
-        for(IasPrompts e: colec) {
-            em.remove(e);
+        for(IasPrompts iap: colec) {
+            em.remove(iap);
         }
         
         em.remove(prompt);
@@ -109,5 +109,15 @@ public class MetodosLucas {
         em.getTransaction().commit();
 
         return resultados.toString();
+    }
+    
+    public static List<Prompts> obtenerTodosLosPrompts() {
+        
+        StringBuilder cadenon = new StringBuilder();
+
+        TypedQuery<Prompts> query = em.createQuery("SELECT p FROM Prompts p", Prompts.class);
+        List<Prompts> prompts = query.getResultList();
+
+        return prompts;
     }
 }
