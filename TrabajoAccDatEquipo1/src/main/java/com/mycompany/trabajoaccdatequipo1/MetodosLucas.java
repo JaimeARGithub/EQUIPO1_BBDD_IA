@@ -25,21 +25,15 @@ import javax.persistence.TypedQuery;
 public class MetodosLucas {
     
     
-    public static void insertarPrompts(int IDIA, String texto){
-        em.getTransaction().begin();   
+    public static void insertarPrompts(List<Ias> listaias, String texto){
+        em.getTransaction().begin();
         
-        Ias ia = em.find(Ias.class,IDIA,LockModeType.PESSIMISTIC_READ);//para comrpobar si la ia existe
-        if(ia!=null){
-
-            Prompts promptDEF = new Prompts(texto,null);
-            em.persist(promptDEF);
+        Prompts promptDEF = new Prompts(texto,null);
+        em.persist(promptDEF);
+        for(Ias ia: listaias){
             IasPrompts iaps = new IasPrompts(ia,promptDEF);
             em.persist(iaps);
-
-        } else {
-            System.out.println("La IA no existe");
-        }
-        
+        }        
         em.getTransaction().commit();
     }
     
@@ -47,8 +41,7 @@ public class MetodosLucas {
         
         em.getTransaction().begin();
         
-        Prompts prompt = null;
-        prompt = em.find(Prompts.class,id,LockModeType.PESSIMISTIC_READ);
+        Prompts prompt = em.find(Prompts.class,id,LockModeType.PESSIMISTIC_READ);
         
         Collection<IasPrompts> colec = prompt.getIasPromptsCollection();
         
@@ -119,5 +112,15 @@ public class MetodosLucas {
         List<Prompts> prompts = query.getResultList();
 
         return prompts;
+    }
+    
+    public static List<Ias> obtenerTodasLasIAsEnLista() {
+        StringBuilder result = new StringBuilder();
+
+        // Realizar la consulta
+        TypedQuery<Ias> query = em.createQuery("SELECT i FROM Ias i", Ias.class);
+        List<Ias> ias = query.getResultList();
+
+        return ias;
     }
 }
