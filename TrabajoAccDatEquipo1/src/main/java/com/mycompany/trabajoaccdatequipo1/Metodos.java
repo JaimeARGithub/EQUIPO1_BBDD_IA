@@ -407,41 +407,27 @@ public class Metodos {
 
     
     
-    public static void modificarIa(Ias iaActual) {
+    public static void modificarIa(Ias iaActual, Ias modificada) {
 
         em.getTransaction().begin();
 
-        // Comprobamos si el tipo existe
-        Tipos tipo = em.find(Tipos.class, iaActual.getIdtipo().getIdtipo());
-        if (tipo == null) {
-            System.out.println("El tipo de IA no existe.");
-            return;
-        }
-
-        // Comprobamos si el ID de la IA ya existe
-        Ias ia = em.find(Ias.class, iaActual.getIdia());
-        if (ia == null) {
-            System.out.println("La IA con el ID proporcionado no existe.");
-            return;
-        }
 
         // Comprobamos si el nombre de la IA ya existe en otra IA
-        TypedQuery<Ias> query = em.createQuery("SELECT i FROM Ias i WHERE i.nombre = :nombre AND i.idia != :idia", Ias.class);
-        query.setParameter("nombre", iaActual.getNombre());
-        query.setParameter("idia", iaActual.getIdia());
+        TypedQuery<Ias> query = em.createQuery("SELECT i FROM Ias i WHERE i.nombre = :nombre", Ias.class);
+        query.setParameter("nombre", modificada.getNombre());
         Collection<Ias> iasConMismoNombre = query.getResultList();
         if (!iasConMismoNombre.isEmpty()) {
             System.out.println("El nombre de la IA ya existe en otra IA.");
             return;
         }
 
+        Ias ia = em.find(Ias.class, iaActual.getIdia(), LockModeType.PESSIMISTIC_READ);
+        
         // Si todo está bien, modificamos la IA
-        ia.setNombre(iaActual.getNombre());
-        ia.setModelo(iaActual.getModelo());
-        ia.setUsos(iaActual.getUsos());
-        ia.setPopularidad(iaActual.getPopularidad());
-        ia.setIdtipo(tipo);
-        em.persist(ia);
+        ia.setNombre(modificada.getNombre());
+        ia.setModelo(modificada.getModelo());
+        ia.setIdtipo(modificada.getIdtipo());
+
         em.getTransaction().commit();
     }
 
