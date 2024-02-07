@@ -29,7 +29,7 @@ import javax.persistence.Table;
 public class IasPrompts implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id @GeneratedValue
+    @Id
     @Basic(optional = false)
     @Column(name = "IDREGISTRO")
     private int idregistro;
@@ -55,6 +55,7 @@ public class IasPrompts implements Serializable {
     }
     
     public IasPrompts(Ias idia, Prompts idprompt) {
+        this.idregistro = Metodos.autoIdIaPrompt();
         this.idia = idia;
         this.idprompt = idprompt;
     }

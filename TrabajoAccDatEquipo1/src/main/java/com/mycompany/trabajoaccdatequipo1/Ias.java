@@ -35,7 +35,7 @@ import javax.persistence.Table;
 public class Ias implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id @GeneratedValue
+    @Id
     @Basic(optional = false)
     @Column(name = "IDIA")
     private int idia;
@@ -75,6 +75,7 @@ public class Ias implements Serializable {
     
     
     public Ias(String nombre, String modelo, Tipos idtipo) {
+        this.idia = Metodos.autoIdIA();
         this.nombre = nombre;
         this.modelo = modelo;
         this.usos = 0;

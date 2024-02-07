@@ -4,6 +4,7 @@
  */
 package com.mycompany.trabajoaccdatequipo1;
 
+import java.math.BigDecimal;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Collection;
 import java.util.Iterator;
@@ -139,42 +140,34 @@ public class Metodos {
     /**
      * Método que permite realizar la inserción de un tipo de ia en la base de
      * datos. Antes de realizarse la inserción, se hace una búsqueda en la base
-     * de datos; primero por id y luego por nombre. Si el tipo de IA que se
-     * intenta insertar NO existe, se inserta.
+     * de datos por nombre. Si el tipo de IA que se intenta insertar NO existe, se inserta.
      *
-     * @param id id del tipo a insertar
      * @param nombre nombre del tipo de IA
      * @param desc descripción de los usos para los que se emplea el tipo de ia
      */
-    public static void insertarTipo(int id, String nombre, String desc) {
+    public static void insertarTipo(String nombre, String desc) {
         em.getTransaction().begin();
         Tipos tipoBusca = null;
 
-        // Primero se busca por id; si existe, mensaje de error
-        tipoBusca = em.find(Tipos.class, id, LockModeType.PESSIMISTIC_READ);
-        if (tipoBusca != null) {
-            System.out.println("Ya existe ese tipo en la base de datos.");
-        } else {
+        // Se busca por nombre; si existe, mensaje de error; si no, se inserta
+        TypedQuery<Tipos> query = em.createQuery("select t from Tipos t where t.tipo=:NOMBREP", Tipos.class);
+        query.setParameter("NOMBREP", nombre);
+        try {
 
-            // Luego se busca por nombre; si existe, mensaje de error; si no, se inserta
-            TypedQuery<Tipos> query = em.createQuery("select t from Tipos t where t.tipo=:NOMBREP", Tipos.class);
-            query.setParameter("NOMBREP", nombre);
-            try {
+            tipoBusca = query.getSingleResult();
+            System.out.println("Ya existe un tipo con ese nombre en la base de datos.");
 
-                tipoBusca = query.getSingleResult();
-                System.out.println("Ya existe un tipo con ese nombre en la base de datos.");
+        } catch (NoResultException e) {
 
-            } catch (NoResultException e) {
+            Tipos tipoInsertar = new Tipos(nombre, desc);
+            em.persist(tipoInsertar);
+            System.out.println("Tipo insertado con éxito.");
 
-                Tipos tipoInsertar = new Tipos(id, nombre, desc);
-                em.persist(tipoInsertar);
-                System.out.println("Tipo insertado con éxito.");
-
-            }
         }
 
         em.getTransaction().commit();
     }
+    
 
     /**
      * Método para ver todos los datos existentes en la tabla "tipos de IAs".
@@ -257,12 +250,12 @@ public class Metodos {
 
     /**
      * LÓGICA DE NEGOCIO: NO PUEDEN BORRARSE REGISTROS DE LOS QUE DEPENDAN OTROS
-     * PRIMERO HABRÁ QUE BORRAR ESOS OTROS REGISTROS DEPENDIENTES Método que
-     * hace el borrado de un tipo buscándolo por su ID. Primero se controla que
-     * el tipo exista. Si no existe, mensaje de error. Tras ver que exista, se
-     * controla que tenga registros que dependan de él. Si los tiene, mensaje de
-     * error. Si el tipo existe y no hay IAs que dependan de él, el borrado se
-     * hace correctamente.
+     * PRIMERO HABRÁ QUE BORRAR ESOS OTROS REGISTROS DEPENDIENTES 
+     * Método que hace el borrado de un tipo buscándolo por su ID. Primero se 
+     * controla que el tipo exista. Si no existe, mensaje de error. Tras ver que 
+     * exista, se controla que tenga registros que dependan de él. Si los tiene, 
+     * mensaje de error. Si el tipo existe y no hay IAs que dependan de él, el 
+     * borrado se hace correctamente.
      *
      * @param id id del tipo a borrar
      */
@@ -340,10 +333,21 @@ public class Metodos {
         }
     }
 
+    
+    /**
+     * Método que realiza el borrado de un registro de la tabla IAs, buscándolo
+     * por su id. En primer lugar se verifica que exista la IA correspondiente al
+     * id introducido; si no existe, mensaje de error.
+     * Si existe, se borra la IA Y TAMBIÉN SE BORRAN los registros que la asocian
+     * con la tabla intermedia, borrando las relaciones entre la tabla IasPrompts
+     * y la IA borrada.
+     * 
+     * @param idIa id de la ia a borrar
+     */
     public static void deleteIA(int idIa) {
         em.getTransaction().begin();
 
-        Ias ia = em.find(Ias.class, idIa);
+        Ias ia = em.find(Ias.class, idIa, LockModeType.PESSIMISTIC_READ);
         if (ia != null) {
             // Primero eliminamos las relaciones en la tabla intermedia
             Collection<IasPrompts> iasPromptsCollection = ia.getIasPromptsCollection();
@@ -360,16 +364,28 @@ public class Metodos {
         em.getTransaction().commit();
     }
 
-    public static void insertIa(Ias iaActual, Tipos tipoActual) {
+    
+    /**
+     * Método que permite hacer la inserción de una IA, recibiendo por parámetro
+     * el objeto IA a insertar y el id del Tipo al que irá asociada.
+     * En primer lugar se verifica que el tipo al que se va a asociar exista.
+     * Si existe, se verifica que no existan previamente en la base de datos el
+     * ID y el nombre de la IA que se va a insertar.
+     * Si se superan las comprobaciones, la IA se inserta en la base de datos.
+     * 
+     * @param iaActual objeto IA cuyos datos se insertarán
+     * @param idtipo id del tipo al que se asociará la ia
+     */
+    public static void insertIa(Ias iaActual, int idtipo) {
         em.getTransaction().begin();
-        Tipos tipo = em.find(Tipos.class, tipoActual.getIdtipo());
+        Tipos tipo = em.find(Tipos.class, idtipo, LockModeType.PESSIMISTIC_READ);
 
         if (tipo == null) {
             System.out.println("El tipo no existe");
             return;
         }
 
-        Ias ia = em.find(Ias.class, iaActual.getIdia());
+        Ias ia = em.find(Ias.class, iaActual.getIdia(), LockModeType.PESSIMISTIC_READ);
 
         if (ia != null) {
             System.out.println("El ID de la IA ya existe.");
@@ -384,11 +400,13 @@ public class Metodos {
             return;
         }
 
-        iaActual.setIdtipo(tipoActual);
+        iaActual.setIdtipo(tipo);
         em.persist(iaActual);
         em.getTransaction().commit();
     }
 
+    
+    
     public static void modificarIa(Ias iaActual) {
 
         em.getTransaction().begin();
@@ -427,6 +445,13 @@ public class Metodos {
         em.getTransaction().commit();
     }
 
+    
+    /**
+     * Método que recoge toda la información relativa a la tabla de IAs,
+     * devolviendo una String que aglutina la misma.
+     * 
+     * @return String con toda la información de la tabla IAs
+     */
     public static String selectAllIa() {
         StringBuilder result = new StringBuilder();
 
@@ -447,6 +472,15 @@ public class Metodos {
         return result.toString();
     }
     
+    
+    /**
+     * Método que recibe por parámetro el ID de una IA y verifica que exista
+     * en la base de datos. Muestra un mensaje de error si no existe, y si existe,
+     * muestra toda la información relativa a esa IA y a sus relaciones con las
+     * tablas de Tipos y Prompts que tenga asociados.
+     * 
+     * @param idIa id de la IA cuya información se mostrará
+     */
     public static void selectIa(int idIa){
         Ias ia = em.find(Ias.class, idIa);
 
@@ -474,8 +508,101 @@ public class Metodos {
             System.out.println("No se encontró ninguna IA con el ID proporcionado.");
         }
     }
+
     
+    /**
+     * Método que genera automáticamente un id para tipos de ia.
+     * Realiza una consulta inicial a la base de datos para hallar el número
+     * de registros; si es 0, devuelve un 1 como primer id, y si no lo es,
+     * halla el id máximo existente y devuelve su valor más uno.
+     * 
+     * @return id automático para tipos de ia
+     */
+    public static int autoIdTipo() {
+        int id=0;
+        
+        TypedQuery<Long> query = em.createQuery("select count(t) from Tipos t", Long.class);
+        int recuento = (query.getSingleResult()).intValue();
+        
+        if (recuento==0) {
+            id=1;
+        } else {
+            TypedQuery<Integer> queryMax = em.createQuery("select max(t.idtipo) from Tipos t", Integer.class);
+            id = (queryMax.getSingleResult())+1;
+        }
+        
+        return id;
+    }
     
+    /**
+     * Método que genera automáticamente un id para ias.
+     * Realiza una consulta inicial a la base de datos para hallar el número
+     * de registros; si es 0, devuelve un 1 como primer id, y si no lo es,
+     * halla el id máximo existente y devuelve su valor más uno.
+     * 
+     * @return id automático para ias
+     */
+    public static int autoIdIA() {
+        int id=0;
+        
+        TypedQuery<Long> query = em.createQuery("select count(i) from Ias i", Long.class);
+        int recuento = (query.getSingleResult()).intValue();
+        
+        if (recuento==0) {
+            id=1;
+        } else {
+            TypedQuery<Integer> queryMax = em.createQuery("select max(i.idia) from Ias i", Integer.class);
+            id = (queryMax.getSingleResult())+1;
+        }
+        
+        return id;
+    }
     
+    /**
+     * Método que genera automáticamente un id para prompts.
+     * Realiza una consulta inicial a la base de datos para hallar el número
+     * de registros; si es 0, devuelve un 1 como primer id, y si no lo es,
+     * halla el id máximo existente y devuelve su valor más uno.
+     * 
+     * @return id automático para prompts
+     */
+    public static int autoIdPrompt() {
+        int id=0;
+        
+        TypedQuery<Long> query = em.createQuery("select count(p) from Prompts p", Long.class);
+        int recuento = (query.getSingleResult()).intValue();
+        
+        if (recuento==0) {
+            id=1;
+        } else {
+            TypedQuery<Integer> queryMax = em.createQuery("select max(p.idprompt) from Prompts p", Integer.class);
+            id = (queryMax.getSingleResult())+1;
+        }
+        
+        return id;
+    }
     
+    /**
+     * Método que genera automáticamente un id para registros intermedios ia-prompt.
+     * Realiza una consulta inicial a la base de datos para hallar el número
+     * de registros; si es 0, devuelve un 1 como primer id, y si no lo es,
+     * halla el id máximo existente y devuelve su valor más uno.
+     * 
+     * @return id automático para registros intermedios ia-prompt.
+     */
+    public static int autoIdIaPrompt() {
+        int id=0;
+        
+        TypedQuery<Long> query = em.createQuery("select count(ip) from IasPrompts ip", Long.class);
+        int recuento = (query.getSingleResult()).intValue();
+        
+        if (recuento==0) {
+            id=1;
+        } else {
+            TypedQuery<Integer> queryMax = em.createQuery("select max(ip.idregistro) from IasPrompts ip", Integer.class);
+            id = (queryMax.getSingleResult())+1;
+        }
+        
+        return id;
+    }
 }

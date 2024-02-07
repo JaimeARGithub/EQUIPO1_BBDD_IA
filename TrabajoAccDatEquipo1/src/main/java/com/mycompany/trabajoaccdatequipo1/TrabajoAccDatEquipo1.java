@@ -38,12 +38,18 @@ public class TrabajoAccDatEquipo1 {
         
         //MetodosLucas.mostrarPromptsYIasAsociadas(2);
         //Metodos.insertIa(iaActual, tipoActual);
-        //Metodos.deleteIA(20);
+        Metodos.deleteIA(1);
         //Metodos.modificarIa(iaActual);
         
         //Metodos.selectIa(1);
         
-        interfaz();
+        //interfaz();
+        
+        //System.out.println(Metodos.autoIdTipo());
+        //System.out.println(Metodos.autoIdIA());
+        //System.out.println(Metodos.autoIdPrompt());
+        //System.out.println(Metodos.autoIdIaPrompt());
+        
         
         
     }
@@ -73,4 +79,6 @@ public class TrabajoAccDatEquipo1 {
                 break;
         }
     }
+    
+    
 }

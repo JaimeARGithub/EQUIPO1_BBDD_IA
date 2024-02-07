@@ -31,7 +31,7 @@ import javax.persistence.Table;
 public class Tipos implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id @GeneratedValue
+    @Id
     @Basic(optional = false)
     @Column(name = "IDTIPO")
     private int idtipo;
@@ -56,6 +56,7 @@ public class Tipos implements Serializable {
     }
     
     public Tipos(String tipo, String descripcion) {
+        this.idtipo = Metodos.autoIdTipo();
         this.tipo = tipo;
         this.descripcion = descripcion;
     }

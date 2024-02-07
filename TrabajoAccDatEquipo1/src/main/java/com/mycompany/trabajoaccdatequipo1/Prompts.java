@@ -30,7 +30,7 @@ import javax.persistence.Table;
 public class Prompts implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id @GeneratedValue
+    @Id
     @Basic(optional = false)
     @Column(name = "IDPROMPT")
     private int idprompt;
@@ -44,10 +44,6 @@ public class Prompts implements Serializable {
     // CONSTRUCTORES
     public Prompts() {
     }
-
-    public Prompts(String texto){
-        this.texto=texto;
-    }
     
     // LÓGICA DE NEGOCIO: AL CREAR UN PROMPT, DEBE IR ASOCIADO A UNA SERIE
     // DE IAS, MÍNIMO UNA. NO PUEDE HABER PROMPTS SIN IAS.
@@ -58,6 +54,7 @@ public class Prompts implements Serializable {
     }
     
     public Prompts(String texto, Collection<IasPrompts> iasPromptsCollection) {
+        this.idprompt = Metodos.autoIdPrompt();
         this.texto = texto;
         this.iasPromptsCollection = iasPromptsCollection;
     }
