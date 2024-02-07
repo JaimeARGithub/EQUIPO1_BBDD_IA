@@ -24,21 +24,18 @@ import javax.persistence.TypedQuery;
  */
 public class MetodosLucas {
     
-    public static void insertarPrompts(int IDIA, int idprompt, String texto){
+    
+    public static void insertarPrompts(int IDIA, String texto){
         em.getTransaction().begin();   
         
         Ias ia = em.find(Ias.class,IDIA,LockModeType.PESSIMISTIC_READ);//para comrpobar si la ia existe
         if(ia!=null){
-            Prompts prompt = null;
-            prompt =  em.find(Prompts.class,idprompt,LockModeType.PESSIMISTIC_READ );// para ver si existe el prompt en caso de que exista la ia 
-            if (prompt == null){ 
-                Prompts promptDEF = new Prompts(idprompt,texto,null);
-                em.persist(promptDEF);
-                IasPrompts iaps = new IasPrompts(null,null);
-                em.persist(iaps);
-            } else {
-                System.out.println("El prompt ya existe");
-            }
+
+            Prompts promptDEF = new Prompts(texto,null);
+            em.persist(promptDEF);
+            IasPrompts iaps = new IasPrompts(ia,promptDEF);
+            em.persist(iaps);
+
         } else {
             System.out.println("La IA no existe");
         }
@@ -53,22 +50,13 @@ public class MetodosLucas {
         Prompts prompt = null;
         prompt = em.find(Prompts.class,id,LockModeType.PESSIMISTIC_READ);
         
-        if(prompt!=null){
-            em.remove(prompt);
-            
-            TypedQuery<IasPrompts> query = em.createQuery(
-                "select iap from IasPrompts iap where iap.idprompt=:idPro" , 
-                IasPrompts.class);
-            query.setParameter("idPro", id);
-            
-            try{
-                IasPrompts promptia=null;
-                promptia = query.getSingleResult();
-                em.remove(promptia);
-            }catch(NoResultException e){
-                System.out.println("No existe un usuario con ese id");
-            }
+        Collection<IasPrompts> colec = prompt.getIasPromptsCollection();
+        
+        for(IasPrompts e: colec) {
+            em.remove(e);
         }
+        
+        em.remove(prompt);
     }
     
     
@@ -97,6 +85,7 @@ public class MetodosLucas {
         }
         return resultado.toString();
     }   
+    
     
     public static String mostrarTodosLosPrompts(){
         em.getTransaction().begin();
