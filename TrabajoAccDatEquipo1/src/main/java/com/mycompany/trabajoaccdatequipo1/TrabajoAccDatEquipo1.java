@@ -43,7 +43,7 @@ public class TrabajoAccDatEquipo1 {
         
         //Metodos.selectIa(1);
         
-        interfaz();
+        IasInterfaz.main(null);
         
         //System.out.println(Metodos.autoIdTipo());
         //System.out.println(Metodos.autoIdIA());

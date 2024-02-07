@@ -82,6 +82,7 @@ public class Ias implements Serializable {
         this.popularidad = "No popular.";
         this.idtipo = idtipo;
     }
+
     
 
     
