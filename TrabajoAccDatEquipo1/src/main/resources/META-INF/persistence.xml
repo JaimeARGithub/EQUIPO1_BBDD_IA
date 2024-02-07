@@ -6,12 +6,12 @@
     <class>com.mycompany.trabajoaccdatequipo1.IasPrompts</class>
     <class>com.mycompany.trabajoaccdatequipo1.Ias</class>
     <class>com.mycompany.trabajoaccdatequipo1.Prompts</class>
+    <validation-mode>NONE</validation-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:ORCL18"/>
-      <property name="javax.persistence.jdbc.user" value="dam2"/>
+      <property name="javax.persistence.jdbc.user" value="C##Dam2"/>
       <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
-      <property name="javax.persistence.jdbc.password" value="dam2"/>
-      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+      <property name="javax.persistence.jdbc.password" value="123"/>
     </properties>
   </persistence-unit>
 </persistence>

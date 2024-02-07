@@ -452,24 +452,14 @@ public class Metodos {
      * 
      * @return String con toda la información de la tabla IAs
      */
-    public static String selectAllIa() {
+    public static Collection<Ias> selectAllIa() {
         StringBuilder result = new StringBuilder();
 
         // Realizar la consulta
         TypedQuery<Ias> query = em.createQuery("SELECT i FROM Ias i", Ias.class);
         Collection<Ias> ias = query.getResultList();
 
-        for (Ias ia : ias) {
-            // Construir la información de la Ia y agregarla a la StringBuilder
-            result.append("ID: ").append(ia.getIdia()).append("\n");
-            result.append("Nombre: ").append(ia.getNombre()).append("\n");
-            result.append("Modelo: ").append(ia.getModelo()).append("\n");
-            result.append("Usos: ").append(ia.getUsos()).append("\n");
-            result.append("Popularidad: ").append(ia.getPopularidad()).append("\n");
-            result.append("\n"); // Agregar una línea en blanco entre cada Ia
-        }
-
-        return result.toString();
+        return ias;
     }
     
     
@@ -604,5 +594,9 @@ public class Metodos {
         }
         
         return id;
+    }
+    
+    public static Ias buscarIa(int idIa){
+        return em.find(Ias.class, idIa);
     }
 }
