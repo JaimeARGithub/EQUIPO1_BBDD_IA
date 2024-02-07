@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 public class PromptsInterfaz extends javax.swing.JFrame {
 
     private int filaSeleccionada = -1; // -1 indica que no hay ninguna fila seleccionada inicialmente
-    private List<Prompts> listPrompts = MetodosLucas.obtenerTodosLosPrompts();;
+    private List<Prompts> listPrompts = MetodosLucas.obtenerTodosLosPrompts();
     
     /**
      * Creates new form PromptsInterfaz
@@ -31,6 +31,7 @@ public class PromptsInterfaz extends javax.swing.JFrame {
 
     public void cargarDatosEnTabla(){
         
+        listPrompts = MetodosLucas.obtenerTodosLosPrompts();
         DefaultTableModel modelo = (DefaultTableModel) tablaPrompts.getModel();
         
         modelo.setRowCount(0);
@@ -80,6 +81,7 @@ public class PromptsInterfaz extends javax.swing.JFrame {
         añadirBoton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaPrompts = new javax.swing.JTable();
+        refrescarBoton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -106,7 +108,12 @@ public class PromptsInterfaz extends javax.swing.JFrame {
             }
         });
 
-        añadirBoton.setText("Añadir prompts");
+        añadirBoton.setText("Añadir prompt");
+        añadirBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                añadirBotonActionPerformed(evt);
+            }
+        });
 
         tablaPrompts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -127,6 +134,13 @@ public class PromptsInterfaz extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tablaPrompts);
 
+        refrescarBoton.setText("Refrescar tabla");
+        refrescarBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refrescarBotonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -134,17 +148,17 @@ public class PromptsInterfaz extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(atrasBoton)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(iasAsociadasBoton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(eliminarBoton)
-                                .addGap(159, 159, 159)
-                                .addComponent(añadirBoton)))
-                        .addGap(0, 65, Short.MAX_VALUE)))
+                        .addComponent(iasAsociadasBoton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(eliminarBoton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(añadirBoton))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(atrasBoton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(refrescarBoton)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -157,8 +171,13 @@ public class PromptsInterfaz extends javax.swing.JFrame {
                     .addComponent(eliminarBoton)
                     .addComponent(añadirBoton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(atrasBoton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(atrasBoton)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(refrescarBoton))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -213,18 +232,16 @@ public class PromptsInterfaz extends javax.swing.JFrame {
                 Prompts p = listPrompts.get(filaSeleccionada);
                 int idPrompt = p.getIdprompt();
 
-                MetodosLucas.borrarPrompt(filaSeleccionada);
-
-                listPrompts.remove(filaSeleccionada);
+                MetodosLucas.borrarPrompt(idPrompt);
 
                 cargarDatosEnTabla();
 
                 desactivarBotones();
-                
             }
         }
     }//GEN-LAST:event_eliminarBotonActionPerformed
 
+    
     private void tablaPromptsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaPromptsMouseClicked
         int filaSeleccionada = tablaPrompts.getSelectedRow();
         
@@ -232,13 +249,14 @@ public class PromptsInterfaz extends javax.swing.JFrame {
         iasAsociadasBoton.setEnabled(true);
     }//GEN-LAST:event_tablaPromptsMouseClicked
 
-    private void abrirVentanaModificar() {
-        // Asume que tu ventana principal se extiende de JFrame
-        ModificarPromptsInterfaz ventanaModificar = new ModificarPromptsInterfaz();
-        ventanaModificar.setLocationRelativeTo(this); // Para centrar respecto a la ventana principal
-        ventanaModificar.setVisible(true);
-    }
-    
+    private void añadirBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_añadirBotonActionPerformed
+        crearPromptInterfaz.main(null);
+    }//GEN-LAST:event_añadirBotonActionPerformed
+
+    private void refrescarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refrescarBotonActionPerformed
+        cargarDatosEnTabla(); 
+    }//GEN-LAST:event_refrescarBotonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -281,6 +299,7 @@ public class PromptsInterfaz extends javax.swing.JFrame {
     private javax.swing.JButton iasAsociadasBoton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton refrescarBoton;
     private java.awt.ScrollPane scrollPane1;
     private javax.swing.JTable tablaPrompts;
     // End of variables declaration//GEN-END:variables
