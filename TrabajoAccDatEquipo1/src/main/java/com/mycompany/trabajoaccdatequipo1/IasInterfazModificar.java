@@ -44,6 +44,48 @@ public class IasInterfazModificar extends javax.swing.JDialog {
             }
         }
 
+        jTextField1.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                updateButtonState();
+            }
+
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                updateButtonState();
+            }
+
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                updateButtonState();
+            }
+        });
+
+        jTextField2.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                updateButtonState();
+            }
+
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                updateButtonState();
+            }
+
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                updateButtonState();
+            }
+        });
+
+    }
+
+    private void updateButtonState() {
+        String text1 = jTextField1.getText().trim();
+        String text2 = jTextField2.getText().trim();
+
+        // Habilita el botón si ambos campos no están vacíos
+        jButton1.setEnabled(!text1.isEmpty() && !text2.isEmpty());
     }
 
     private IasInterfazModificar(JFrame jFrame, boolean b) {
@@ -155,9 +197,9 @@ public class IasInterfazModificar extends javax.swing.JDialog {
         Ias iaPrincipal = null;
 
         for (Ias ia : iasTabla) {
-            
+
             System.out.println("Contenido: " + ia.getNombre());
-            
+
             if (ia.getNombre().equals(nombre)) {
 
                 iaPrincipal = ia;
@@ -166,11 +208,10 @@ public class IasInterfazModificar extends javax.swing.JDialog {
         }
 
         System.out.println(iaPrincipal);
-     
 
         Metodos.modificarIa(iaPrincipal, jTextField1.getText(), jTextField2.getText(), jComboBox1.getSelectedItem().toString());
-        
-        dispose();  
+
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

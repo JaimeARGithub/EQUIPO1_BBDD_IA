@@ -8,6 +8,7 @@ import java.awt.CardLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Collection;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -205,27 +206,27 @@ public class IasInterfaz extends javax.swing.JFrame {
         int filaSeleccionada = jTable1.getSelectedRow();
 
         if (filaSeleccionada >= 0) {
-            // Elimina la fila seleccionada del modelo de datos
-            
-            int idEncontrado = -1;
-            for (Ias ia : iasTabla) {
-                System.out.println(modelo.getValueAt(filaSeleccionada, 0));
-                if (ia.getNombre().equals(modelo.getValueAt(filaSeleccionada, 0))) {
+            // Muestra un diálogo emergente para confirmar la eliminación
+            int respuesta = JOptionPane.showConfirmDialog(this,
+                    "¿Estás seguro de que deseas eliminar esta fila?",
+                    "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
-                    idEncontrado = ia.getIdia();
-                    
-                    System.out.println(idEncontrado);
-                    System.out.println(ia.getIdia());
-                    break;
+            if (respuesta == JOptionPane.YES_OPTION) {
+                // Elimina la fila seleccionada del modelo de datos
+                int idEncontrado = -1;
+                for (Ias ia : iasTabla) {
+                    if (ia.getNombre().equals(modelo.getValueAt(filaSeleccionada, 0))) {
+                        idEncontrado = ia.getIdia();
+                        break;
+                    }
                 }
-            }
-            
-            System.out.println(Metodos.buscarIa(idEncontrado).getIdia());
 
-            modelo.removeRow(filaSeleccionada);
-            
-            Metodos.deleteIA(Metodos.buscarIa(idEncontrado).getIdia());
-            System.out.println("Eliminado con exito");
+                modelo.removeRow(filaSeleccionada);
+                Metodos.deleteIA(Metodos.buscarIa(idEncontrado).getIdia());
+                System.out.println("Eliminado con éxito");
+            } else {
+                System.out.println("Eliminación cancelada");
+            }
         }
 
     }//GEN-LAST:event_jButton3ActionPerformed

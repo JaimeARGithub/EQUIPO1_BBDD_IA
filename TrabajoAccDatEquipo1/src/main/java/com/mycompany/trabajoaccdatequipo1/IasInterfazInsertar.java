@@ -19,11 +19,56 @@ public class IasInterfazInsertar extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         
+        jButton1.setEnabled(false);
+
         Collection<Tipos> tipos = Metodos.selectAllTipos();
 
         for (Tipos t : tipos) {
             jComboBox1.addItem(t.getTipo());
         }
+
+        jTextField1.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                updateButtonState();
+            }
+
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                updateButtonState();
+            }
+
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                updateButtonState();
+            }
+        });
+        
+        jTextField2.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                updateButtonState();
+            }
+
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                updateButtonState();
+            }
+
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                updateButtonState();
+            }
+        });
+
+    }
+
+    private void updateButtonState() {
+        String text1 = jTextField1.getText().trim();
+        String text2 = jTextField2.getText().trim();
+
+        // Habilita el botón si ambos campos no están vacíos
+        jButton1.setEnabled(!text1.isEmpty() && !text2.isEmpty());
     }
 
     /**
@@ -125,7 +170,7 @@ public class IasInterfazInsertar extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         Metodos.insertIa(new Ias(jTextField1.getText(), jTextField2.getText(), null), jComboBox1.getSelectedItem().toString());
-        
+
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
