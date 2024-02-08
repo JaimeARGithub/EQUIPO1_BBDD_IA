@@ -40,6 +40,7 @@ public class PromptsInterfaz extends javax.swing.JFrame {
     public void cargarDatosEnTabla(){
         
         listPrompts = MetodosLucas.obtenerTodosLosPrompts();
+        
         DefaultTableModel modelo = (DefaultTableModel) tablaPrompts.getModel();
         
         modelo.setRowCount(0);
@@ -227,6 +228,8 @@ public class PromptsInterfaz extends javax.swing.JFrame {
         int filaSeleccionada = tablaPrompts.getSelectedRow();
         if (filaSeleccionada >= 0) { // Asegúrate de que hay una fila seleccionada
             filaSeleccionada = tablaPrompts.convertRowIndexToModel(filaSeleccionada);// Convierte a índice del modelo si es necesario
+            
+            listPrompts = MetodosLucas.obtenerTodosLosPrompts();
             
             Prompts p = listPrompts.get(filaSeleccionada);
             int idPrompt = p.getIdprompt();

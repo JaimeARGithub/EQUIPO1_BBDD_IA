@@ -28,7 +28,7 @@ public class MostrarPromptsIAS extends javax.swing.JFrame {
         String texto = MetodosLucas.mostrarPromptsYIasAsociadas(idPrompt);
         jTextArea1.setText(texto);
     }
-
+    
     /**
      * 
      * Método inicializador de componentes generado automáticamente por el editor de formularios de Swing.

@@ -6,7 +6,6 @@ package com.mycompany.trabajoaccdatequipo1;
 
 import static com.mycompany.trabajoaccdatequipo1.Metodos.em;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
@@ -68,22 +67,17 @@ public class MetodosLucas {
     public static String mostrarPromptsYIasAsociadas(int id){
         
         StringBuilder resultado = new StringBuilder();
-        Prompts prompt = null;
-        prompt = em.find(Prompts.class, id);
+        Prompts prompt = em.find(Prompts.class, id);
 
         try {
             if (prompt != null) {
                 resultado.append("Prompt: '").append(prompt.getTexto()).append("'\n");
                 resultado.append("Ias en las que se usa: \n");
 
-                Collection<IasPrompts> coleccion = prompt.getIasPromptsCollection();
-                Iterator<IasPrompts> it = coleccion.iterator();
-
-                em.getTransaction().begin();
+                List<IasPrompts> coleccion = ( List<IasPrompts> )prompt.getIasPromptsCollection();
                 
-                while (it.hasNext()) {
-                    IasPrompts iap = it.next();
-                    Ias ia = iap.getIdia();
+                for(IasPrompts it: coleccion) {
+                    Ias ia = it.getIdia();
                     
                     // Se actualiza la popularidad de todas aquellas IAs 
                     // asociadas al Prompt que se esté consultando
@@ -92,14 +86,25 @@ public class MetodosLucas {
                     resultado.append("- ").append(ia.getNombre()).append("\n");
                 }
                 
-                em.getTransaction().commit();
+                
                 
             }
         } catch (NoResultException e) {
             resultado.append("No existen usuarios\n");
         }
+        
         return resultado.toString();
     }   
+    
+    public static Prompts obtenerPrompt(int id ){
+        
+
+        TypedQuery<Prompts> query = em.createQuery("SELECT p FROM Prompts p WHERE idprompt =:IDP", Prompts.class);
+        query.setParameter("IDP",id);
+        Prompts prom = query.getSingleResult();
+
+        return prom;
+    }
     
     /**
      * Muestra todos los prompts almacenados en la base de datos.
@@ -139,7 +144,6 @@ public class MetodosLucas {
 
         TypedQuery<Prompts> query = em.createQuery("SELECT p FROM Prompts p", Prompts.class);
         List<Prompts> prompts = query.getResultList();
-
         return prompts;
     }
     
@@ -153,7 +157,7 @@ public class MetodosLucas {
         // Realizar la consulta
         TypedQuery<Ias> query = em.createQuery("SELECT i FROM Ias i", Ias.class);
         List<Ias> ias = query.getResultList();
-
+        
         return ias;
     }
 }
