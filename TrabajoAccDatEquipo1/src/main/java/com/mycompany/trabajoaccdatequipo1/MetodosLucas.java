@@ -69,11 +69,21 @@ public class MetodosLucas {
                 Collection<IasPrompts> coleccion = prompt.getIasPromptsCollection();
                 Iterator<IasPrompts> it = coleccion.iterator();
 
+                em.getTransaction().begin();
+                
                 while (it.hasNext()) {
                     IasPrompts iap = it.next();
                     Ias ia = iap.getIdia();
+                    
+                    // Se actualiza la popularidad de todas aquellas IAs 
+                    // asociadas al Prompt que se esté consultando
+                    Metodos.actualizarPopularidad(ia);
+                    
                     resultado.append("- ").append(ia.getNombre()).append("\n");
                 }
+                
+                em.getTransaction().commit();
+                
             }
         } catch (NoResultException e) {
             resultado.append("No existen usuarios\n");

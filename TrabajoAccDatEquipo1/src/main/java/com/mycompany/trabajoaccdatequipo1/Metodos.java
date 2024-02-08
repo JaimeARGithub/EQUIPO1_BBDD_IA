@@ -50,88 +50,88 @@ public class Metodos {
         em.getTransaction().begin();
 
         // INSERT DE LOS TIPOS
-        Tipos tipo1 = new Tipos(1, "Generación de texto por chat", "IAs con capacidad de recibir prompts en forma de texto y responder a ellas en formato chat.");
+        Tipos tipo1 = new Tipos(autoIdTipo(), "Generación de texto por chat", "IAs con capacidad de recibir prompts en forma de texto y responder a ellas en formato chat.");
         em.persist(tipo1);
-        Tipos tipo2 = new Tipos(2, "Generación de imágenes", "IAs que indexan búsquedas en internet y mezclan resultados para generar una imagen que responde a una serie de prompts proporcionados.");
+        Tipos tipo2 = new Tipos(autoIdTipo(), "Generación de imágenes", "IAs que indexan búsquedas en internet y mezclan resultados para generar una imagen que responde a una serie de prompts proporcionados.");
         em.persist(tipo2);
 
         // INSERT DE LAS IAS
         //las del tipo 1
-        Ias ia1 = new Ias(1, "ChatGPT", "GPT", tipo1);
+        Ias ia1 = new Ias(autoIdIA(), "ChatGPT", "GPT", tipo1);
         em.persist(ia1);
-        Ias ia2 = new Ias(2, "Cloudyu", "Mixtral", tipo1);
+        Ias ia2 = new Ias(autoIdIA(), "Cloudyu", "Mixtral", tipo1);
         em.persist(ia2);
-        Ias ia3 = new Ias(3, "Llama2", "GPT", tipo1);
+        Ias ia3 = new Ias(autoIdIA(), "Llama2", "GPT", tipo1);
         em.persist(ia3);
         //las del tipo 2
-        Ias ia4 = new Ias(4, "Dall-e", "GPT", tipo2);
+        Ias ia4 = new Ias(autoIdIA(), "Dall-e", "GPT", tipo2);
         em.persist(ia4);
-        Ias ia5 = new Ias(5, "Midjourney", "GPT", tipo2);
+        Ias ia5 = new Ias(autoIdIA(), "Midjourney", "GPT", tipo2);
         em.persist(ia5);
-        Ias ia6 = new Ias(6, "Dreambooth", "Stable Diffusion", tipo2);
+        Ias ia6 = new Ias(autoIdIA(), "Dreambooth", "Stable Diffusion", tipo2);
         em.persist(ia6);
 
         // INSERT DE LOS PROMPTS
         //los de texto
-        Prompts p1 = new Prompts(1, "Resume este texto", null);
+        Prompts p1 = new Prompts(autoIdPrompt(), "Resume este texto", null);
         em.persist(p1);
-        Prompts p2 = new Prompts(2, "Ofusca este texto", null);
+        Prompts p2 = new Prompts(autoIdPrompt(), "Ofusca este texto", null);
         em.persist(p2);
-        Prompts p3 = new Prompts(3, "Reescribe este texto de manera más sensible al contenido", null);
+        Prompts p3 = new Prompts(autoIdPrompt(), "Reescribe este texto de manera más sensible al contenido", null);
         em.persist(p3);
         //los de imagen
-        Prompts p4 = new Prompts(4, "Genera un paisaje surrealista con colores vibrantes.", null);
+        Prompts p4 = new Prompts(autoIdPrompt(), "Genera un paisaje surrealista con colores vibrantes.", null);
         em.persist(p4);
-        Prompts p5 = new Prompts(5, "Diseña un animal mitológico híbrido entre mantícora y centauro.", null);
+        Prompts p5 = new Prompts(autoIdPrompt(), "Diseña un animal mitológico híbrido entre mantícora y centauro.", null);
         em.persist(p5);
-        Prompts p6 = new Prompts(6, "Crea una represntación visual de la teoría de cuerdas, concepto científico abstracto.", null);
+        Prompts p6 = new Prompts(autoIdPrompt(), "Crea una represntación visual de la teoría de cuerdas, concepto científico abstracto.", null);
         em.persist(p6);
 
         // INSERT DE LAS INSTANCIAS INTERMEDIAS PARA LA TABLA N:M
         // las de texto:
         //combinaciones de ia1 con p1, p2 y p3
-        IasPrompts ip1 = new IasPrompts(1, ia1, p1);
+        IasPrompts ip1 = new IasPrompts(autoIdIaPrompt(), ia1, p1);
         em.persist(ip1);
-        IasPrompts ip2 = new IasPrompts(2, ia1, p2);
+        IasPrompts ip2 = new IasPrompts(autoIdIaPrompt(), ia1, p2);
         em.persist(ip2);
-        IasPrompts ip3 = new IasPrompts(3, ia1, p3);
+        IasPrompts ip3 = new IasPrompts(autoIdIaPrompt(), ia1, p3);
         em.persist(ip3);
         //combinaciones de ia2 con p1, p2 y p3
-        IasPrompts ip4 = new IasPrompts(4, ia2, p1);
+        IasPrompts ip4 = new IasPrompts(autoIdIaPrompt(), ia2, p1);
         em.persist(ip4);
-        IasPrompts ip5 = new IasPrompts(5, ia2, p2);
+        IasPrompts ip5 = new IasPrompts(autoIdIaPrompt(), ia2, p2);
         em.persist(ip5);
-        IasPrompts ip6 = new IasPrompts(6, ia2, p3);
+        IasPrompts ip6 = new IasPrompts(autoIdIaPrompt(), ia2, p3);
         em.persist(ip6);
         //combinaciones de ia3 con p1, p2 y p3
-        IasPrompts ip7 = new IasPrompts(7, ia3, p1);
+        IasPrompts ip7 = new IasPrompts(autoIdIaPrompt(), ia3, p1);
         em.persist(ip7);
-        IasPrompts ip8 = new IasPrompts(8, ia3, p2);
+        IasPrompts ip8 = new IasPrompts(autoIdIaPrompt(), ia3, p2);
         em.persist(ip8);
-        IasPrompts ip9 = new IasPrompts(9, ia3, p3);
+        IasPrompts ip9 = new IasPrompts(autoIdIaPrompt(), ia3, p3);
         em.persist(ip9);
 
         // las de imagen:
         //combinaciones de ia4 con p4, p5 y p6
-        IasPrompts ip10 = new IasPrompts(10, ia4, p4);
+        IasPrompts ip10 = new IasPrompts(autoIdIaPrompt(), ia4, p4);
         em.persist(ip10);
-        IasPrompts ip11 = new IasPrompts(11, ia4, p5);
+        IasPrompts ip11 = new IasPrompts(autoIdIaPrompt(), ia4, p5);
         em.persist(ip11);
-        IasPrompts ip12 = new IasPrompts(12, ia4, p6);
+        IasPrompts ip12 = new IasPrompts(autoIdIaPrompt(), ia4, p6);
         em.persist(ip12);
         //combinaciones de ia5 con p4, p5 y p6
-        IasPrompts ip13 = new IasPrompts(13, ia5, p4);
+        IasPrompts ip13 = new IasPrompts(autoIdIaPrompt(), ia5, p4);
         em.persist(ip13);
-        IasPrompts ip14 = new IasPrompts(14, ia5, p5);
+        IasPrompts ip14 = new IasPrompts(autoIdIaPrompt(), ia5, p5);
         em.persist(ip14);
-        IasPrompts ip15 = new IasPrompts(15, ia5, p6);
+        IasPrompts ip15 = new IasPrompts(autoIdIaPrompt(), ia5, p6);
         em.persist(ip15);
         //combinaciones de ia6 con p4, p5 y p6
-        IasPrompts ip16 = new IasPrompts(16, ia6, p4);
+        IasPrompts ip16 = new IasPrompts(autoIdIaPrompt(), ia6, p4);
         em.persist(ip16);
-        IasPrompts ip17 = new IasPrompts(17, ia6, p5);
+        IasPrompts ip17 = new IasPrompts(autoIdIaPrompt(), ia6, p5);
         em.persist(ip17);
-        IasPrompts ip18 = new IasPrompts(18, ia6, p6);
+        IasPrompts ip18 = new IasPrompts(autoIdIaPrompt(), ia6, p6);
         em.persist(ip18);
 
         em.getTransaction().commit();
@@ -377,7 +377,7 @@ public class Metodos {
      * la IA se inserta en la base de datos.
      *
      * @param iaActual objeto IA cuyos datos se insertarán
-     * @param idtipo id del tipo al que se asociará la ia
+     * @param nombreTipo nombre del tipo al que se asociará la ia
      */
     public static void insertIa(Ias iaActual, String nombreTipo) {
         em.getTransaction().begin();
@@ -420,10 +420,6 @@ public class Metodos {
         TypedQuery<Ias> query = em.createQuery("SELECT i FROM Ias i WHERE i.nombre = :nombre", Ias.class);
         query.setParameter("nombre", nombre);
         Collection<Ias> iasConMismoNombre = query.getResultList();
-        if (!iasConMismoNombre.isEmpty()) {
-            System.out.println("El nombre de la IA ya existe en otra IA.");
-            return;
-        }
 
         // Buscamos el objeto Tipos correspondiente al tipo
         TypedQuery<Tipos> queryTipo = em.createQuery("SELECT t FROM Tipos t WHERE t.tipo = :tipo", Tipos.class);
@@ -441,10 +437,9 @@ public class Metodos {
     }
 
     /**
-     * Método que recoge toda la información relativa a la tabla de IAs,
-     * devolviendo una String que aglutina la misma.
+     * Método que recoge toda la información relativa a la tabla de IAs.
      *
-     * @return String con toda la información de la tabla IAs
+     * @return Colección de todas las IAs
      */
     public static Collection<Ias> selectAllIa() {
         StringBuilder result = new StringBuilder();
@@ -457,12 +452,13 @@ public class Metodos {
     }
 
     /**
-     * Método que recibe por parámetro el ID de una IA y verifica que exista en
-     * la base de datos. Muestra un mensaje de error si no existe, y si existe,
-     * muestra toda la información relativa a esa IA y a sus relaciones con las
+     * Método que recibe por parámetro el ID de una IA y devuelve una String con
+     * toda la información relativa a esa IA y a sus relaciones con las
      * tablas de Tipos y Prompts que tenga asociados.
+     * Si la IA (buscada por ID) no existe, se muestra un mensaje de error.
      *
      * @param idIa id de la IA cuya información se mostrará
+     * @return String con toda la información relativa a la IA
      */
     public static String selectIa(int idIa) {
         StringBuilder info = new StringBuilder();
@@ -592,7 +588,35 @@ public class Metodos {
         return id;
     }
 
+    /**
+     * Método que busca por ID y devuelve un objeto Ia.
+     * 
+     * @param idIa id de la IA a buscar
+     * @return el objeto IA correspondiente al id introducito
+     */
     public static Ias buscarIa(int idIa) {
         return em.find(Ias.class, idIa);
+    }
+    
+    
+    /**
+     * Método que recibe por parámetro una ia y suma 1 al número de
+     * veces que ha sido empleada, actualizando también su valor de popularidad
+     * en función del número de veces que haya sido empleada.
+     * 
+     * @param ia IA cuya popularidad se actualizará
+     */
+    public static void actualizarPopularidad(Ias ia) {
+        ia.setUsos(ia.getUsos()+1);
+        
+        if (ia.getUsos()<4) {
+            ia.setPopularidad("No popular.");
+        } else if (ia.getUsos()>=4 && ia.getUsos()<8) {
+            ia.setPopularidad("Moderadamente popular.");
+        } else if (ia.getUsos()>=8 && ia.getUsos()<12) {
+            ia.setPopularidad("Popular.");
+        } else {
+            ia.setPopularidad("Muy popular.");
+        }
     }
 }

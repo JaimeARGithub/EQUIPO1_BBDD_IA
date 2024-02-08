@@ -14,43 +14,11 @@ public class TrabajoAccDatEquipo1 {
     public static void main(String[] args) {
         Metodos.establecerConexion();
 
+
         //Metodos.insertarDatos();
-        //Metodos.insertarTipo(3, "Generación de audio y música", "Ias empleadas para generar y retransmitir audio, ya sean voces o ruidos, según las especificaciones dadas.");
-        //Metodos.verTipos();
-        //Metodos.verTipoDatos(2);
-        //Metodos.borrarTipo(2);
-        //Metodos.modificarTipo("2", "Cambio de nombre de prueba", "Cambio de descripción de prueba");
-        //MetodosLucas.mostrarTodosLosPrompts();
-        //MetodosLucas.borrarPrompt(2); PROBARPROBARPROBARPROBAR
-        //MetodosLucas.instarPrompts();
-        //MetodosLucas.mostrarPromptsYIasAsociadas(2);
-        //Metodos.insertIa(iaActual, tipoActual);
-        //MetodosLucas.insertarPrompts(1, 13,"OLIOLILLI");
-        //String f = MetodosLucas.mostrarTodosLosPrompts();
-        //System.out.println(f);
-        //MetodosLucas.borrarPrompt(7);
-        //MetodosLucas.insertarPrompts(4, "ESZRDXTCFGVHBJN");
-        //MetodosLucas.insertarPrompts(2, 13,"OLIOLILLI");
-        //MetodosLucas.mostrarPromptsYIasAsociadas(2);
-        //Metodos.insertIa(iaActual, tipoActual);
-       
-        
-        
-        //MetodosLucas.mostrarPromptsYIasAsociadas(2);
-        //Metodos.insertIa(iaActual, tipoActual);
-        //Metodos.deleteIA(1);
-        //Metodos.modificarIa(iaActual);
-        
-        //Metodos.selectIa(1);
-        
+        //interfaz();
         IasInterfaz.main(null);
-        
-        //System.out.println(Metodos.autoIdTipo());
-        //System.out.println(Metodos.autoIdIA());
-        //System.out.println(Metodos.autoIdPrompt());
-        //System.out.println(Metodos.autoIdIaPrompt());
-        
-        
+
         
     }
 
