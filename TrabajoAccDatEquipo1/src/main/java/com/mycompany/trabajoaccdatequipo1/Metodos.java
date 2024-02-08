@@ -6,8 +6,14 @@ package com.mycompany.trabajoaccdatequipo1;
 
 import java.math.BigDecimal;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.LockModeType;
@@ -451,11 +457,51 @@ public class Metodos {
         return ias;
     }
 
+    public static Collection<Ias> selectIasByModelo(String modeloEspecifico) {
+        TypedQuery<Ias> query = em.createQuery("SELECT i FROM Ias i WHERE i.modelo = :modelo", Ias.class);
+        query.setParameter("modelo", modeloEspecifico);
+        return query.getResultList();
+    }
+
+    public static Collection<Ias> selectIasByPopularidad(String popularidadEspecifico) {
+        TypedQuery<Ias> query = em.createQuery("SELECT i FROM Ias i WHERE i.popularidad = :popularidad", Ias.class);
+        query.setParameter("popularidad", popularidadEspecifico);
+        return query.getResultList();
+    }
+
+    public static Collection<Ias> selectIasByModeloYPopularidad(String modeloEspecifico, String popularidadEspecifico) {
+        TypedQuery<Ias> query = em.createQuery("SELECT i FROM Ias i WHERE i.modelo = :modelo AND i.popularidad = :popularidad", Ias.class);
+        query.setParameter("modelo", modeloEspecifico);
+        query.setParameter("popularidad", popularidadEspecifico);
+        return query.getResultList();
+    }
+
+    public static Collection<Ias> selectAllUniqueIa() {
+        Map<String, Ias> uniqueIasMap = new HashMap<>(); // Mapa para rastrear modelos únicos por nombre de modelo
+
+        // Realizar la consulta
+        TypedQuery<Ias> query = em.createQuery("SELECT i FROM Ias i", Ias.class);
+        Collection<Ias> allIas = query.getResultList();
+
+        // Filtrar modelos duplicados basados en el nombre de modelo
+        for (Ias ias : allIas) {
+            String modelo = ias.getModelo();
+            if (!uniqueIasMap.containsKey(modelo)) {
+                // Si el nombre de modelo no está en el mapa, agrégalo
+                uniqueIasMap.put(modelo, ias);
+            }
+            // Si ya existe un modelo con el mismo nombre, no lo agregues nuevamente
+        }
+
+        // Devolver la colección de modelos únicos
+        return uniqueIasMap.values();
+    }
+
     /**
      * Método que recibe por parámetro el ID de una IA y devuelve una String con
-     * toda la información relativa a esa IA y a sus relaciones con las
-     * tablas de Tipos y Prompts que tenga asociados.
-     * Si la IA (buscada por ID) no existe, se muestra un mensaje de error.
+     * toda la información relativa a esa IA y a sus relaciones con las tablas
+     * de Tipos y Prompts que tenga asociados. Si la IA (buscada por ID) no
+     * existe, se muestra un mensaje de error.
      *
      * @param idIa id de la IA cuya información se mostrará
      * @return String con toda la información relativa a la IA
@@ -466,7 +512,6 @@ public class Metodos {
         Ias ia = em.find(Ias.class, idIa);
 
         if (ia != null) {
-            info.append("ID: ").append(ia.getIdia()).append("\n");
             info.append("    Nombre: ").append(ia.getNombre()).append("\n");
             info.append("    Modelo: ").append(ia.getModelo()).append("\n");
             info.append("    Usos: ").append(ia.getUsos()).append("\n");
@@ -590,30 +635,29 @@ public class Metodos {
 
     /**
      * Método que busca por ID y devuelve un objeto Ia.
-     * 
+     *
      * @param idIa id de la IA a buscar
      * @return el objeto IA correspondiente al id introducito
      */
     public static Ias buscarIa(int idIa) {
         return em.find(Ias.class, idIa);
     }
-    
-    
+
     /**
-     * Método que recibe por parámetro una ia y suma 1 al número de
-     * veces que ha sido empleada, actualizando también su valor de popularidad
-     * en función del número de veces que haya sido empleada.
-     * 
+     * Método que recibe por parámetro una ia y suma 1 al número de veces que ha
+     * sido empleada, actualizando también su valor de popularidad en función
+     * del número de veces que haya sido empleada.
+     *
      * @param ia IA cuya popularidad se actualizará
      */
     public static void actualizarPopularidad(Ias ia) {
-        ia.setUsos(ia.getUsos()+1);
-        
-        if (ia.getUsos()<4) {
+        ia.setUsos(ia.getUsos() + 1);
+
+        if (ia.getUsos() < 4) {
             ia.setPopularidad("No popular.");
-        } else if (ia.getUsos()>=4 && ia.getUsos()<8) {
+        } else if (ia.getUsos() >= 4 && ia.getUsos() < 8) {
             ia.setPopularidad("Moderadamente popular.");
-        } else if (ia.getUsos()>=8 && ia.getUsos()<12) {
+        } else if (ia.getUsos() >= 8 && ia.getUsos() < 12) {
             ia.setPopularidad("Popular.");
         } else {
             ia.setPopularidad("Muy popular.");

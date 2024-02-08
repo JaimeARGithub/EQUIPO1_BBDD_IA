@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class IasInterfaz extends javax.swing.JFrame {
 
-    Collection<Ias> iasTabla = Metodos.selectAllIa();
+    public static Collection<Ias> iasTabla = Metodos.selectAllIa();
     DefaultTableModel modelo;
 
     /**
@@ -72,6 +72,7 @@ public class IasInterfaz extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton5 = new javax.swing.JButton();
+        jToggleButton2 = new javax.swing.JToggleButton();
 
         jButton1.setText("jButton1");
 
@@ -136,6 +137,13 @@ public class IasInterfaz extends javax.swing.JFrame {
             }
         });
 
+        jToggleButton2.setText("Consulta masiva");
+        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -146,7 +154,8 @@ public class IasInterfaz extends javax.swing.JFrame {
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -162,6 +171,8 @@ public class IasInterfaz extends javax.swing.JFrame {
                 .addComponent(jButton3)
                 .addGap(18, 18, 18)
                 .addComponent(jButton5)
+                .addGap(18, 18, 18)
+                .addComponent(jToggleButton2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -283,6 +294,18 @@ public class IasInterfaz extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+        IasInterfazConsultaMasiva dialog = new IasInterfazConsultaMasiva(IasInterfaz.this, true);
+        dialog.setVisible(true);
+        
+         dialog.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                actualizarTablaLista(iasTabla);
+            }
+        });
+    }//GEN-LAST:event_jToggleButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -342,6 +365,26 @@ public class IasInterfaz extends javax.swing.JFrame {
         // Actualizar la tabla
         modelo.fireTableDataChanged();
     }
+    
+     public void actualizarTablaLista(Collection<Ias> iasTablaLocal) {
+        // Borrar todas las filas existentes
+        while (modelo.getRowCount() > 0) {
+            modelo.removeRow(0);
+        }
+        // Llenar la tabla con los datos actualizados
+        for (Ias objetoIa : iasTablaLocal) {
+            String nombre = objetoIa.getNombre();
+            String modeloIa = objetoIa.getModelo();
+            int numeroUsos = objetoIa.getUsos();
+            String popularidad = objetoIa.getPopularidad();
+
+            Object[] fila = {nombre, modeloIa, numeroUsos, popularidad};
+            modelo.addRow(fila);
+        }
+
+        // Actualizar la tabla
+        modelo.fireTableDataChanged();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -353,5 +396,6 @@ public class IasInterfaz extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JToggleButton jToggleButton2;
     // End of variables declaration//GEN-END:variables
 }
