@@ -5,7 +5,6 @@
 package com.mycompany.trabajoaccdatequipo1;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -14,20 +13,27 @@ import javax.swing.ListSelectionModel;
 /**
  *
  * @author lucas
+ * 
+ * Esta clase representa la interfaz de usuario para crear nuevos prompts en la base de datos.
+ * Permite al usuario introducir un nuevo prompt y seleccionar las IAs (Inteligencias Artificiales) asociadas a este.
  */
 public class crearPromptInterfaz extends javax.swing.JFrame {
 
-    List<Ias> IAs = MetodosLucas.obtenerTodasLasIAsEnLista();
+    List<Ias> IAs = MetodosLucas.obtenerTodasLasIAsEnLista(); // Lista de todas las IAs disponibles para asociación.
 
     
     /**
-     * Creates new form crearPromptInterfaz
+     * Constructor de la clase. Inicializa los componentes de la interfaz gráfica y configura la lista de IAs.
      */
     public crearPromptInterfaz() {
         initComponents();
-        establecerLista();
+        establecerLista(); //Configura la lista de ias en la interfaz
     }
 
+    /**
+     * Configura la lista de IAs disponibles para asociar al nuevo prompt.
+     * Extrae los nombres de las IAs de la lista obtenida de la base de datos y los muestra en un componente JList.
+     */
     public void establecerLista(){
         //List<Ias> IAs = MetodosLucas.obtenerTodasLasIAsEnLista();
         List<String> nombresIAs = new ArrayList<>();
@@ -148,6 +154,13 @@ public class crearPromptInterfaz extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * Manejador del evento de clic para el botón 'Añadir'.
+     * Recopila la información introducida por el usuario, incluyendo el texto del prompt y las IAs seleccionadas,
+     * y la añade a la base de datos.
+     *
+     * @param evt El evento de acción generado.
+     */
     private void añadirBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_añadirBotonActionPerformed
        
         int confirmacion = JOptionPane.showConfirmDialog(this, 
@@ -173,7 +186,9 @@ public class crearPromptInterfaz extends javax.swing.JFrame {
     }//GEN-LAST:event_añadirBotonActionPerformed
 
     /**
-     * @param args the command line arguments
+     * Punto de entrada principal de la aplicación.
+     *
+     * @param args Argumentos de la línea de comandos.
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

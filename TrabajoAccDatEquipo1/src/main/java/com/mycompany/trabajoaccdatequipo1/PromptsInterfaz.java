@@ -12,6 +12,9 @@ import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author lucas
+ * 
+ * La interfaz de usuario para la gestión de prompts.
+ * Permite visualizar, añadir y eliminar prompts, así como ver las IAs asociadas a cada uno.
  */
 public class PromptsInterfaz extends javax.swing.JFrame {
 
@@ -19,7 +22,8 @@ public class PromptsInterfaz extends javax.swing.JFrame {
     private List<Prompts> listPrompts = MetodosLucas.obtenerTodosLosPrompts();
     
     /**
-     * Creates new form PromptsInterfaz
+     * Constructor de la clase.
+     * Inicializa los componentes de la interfaz y configura la tabla de prompts.
      */
     public PromptsInterfaz() {
         initComponents();
@@ -29,6 +33,10 @@ public class PromptsInterfaz extends javax.swing.JFrame {
         cargarDatosEnTabla();
     }
 
+    /**
+     * Carga los datos de los prompts en la tabla de la interfaz.
+     * Actualiza el modelo de la tabla con la lista de prompts más reciente.
+     */
     public void cargarDatosEnTabla(){
         
         listPrompts = MetodosLucas.obtenerTodosLosPrompts();
@@ -43,11 +51,19 @@ public class PromptsInterfaz extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Desactiva los botones que requieren que una fila esté seleccionada.
+     * Se llama al inicio y después de eliminar un prompt para asegurar el estado correcto de los botones.
+     */
     public void desactivarBotones(){
         eliminarBoton.setEnabled(false);
         iasAsociadasBoton.setEnabled(false);
     }
     
+    /**
+     * Configura la tabla de prompts.
+     * Inicializa el modelo de la tabla con una estructura básica sin datos.
+     */
     public void establecerTabla(){
         tablaPrompts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -200,6 +216,8 @@ public class PromptsInterfaz extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // Gestores de eventos para los botones y la tabla.
+    
     private void atrasBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasBotonActionPerformed
         dispose();
         interfaz();
@@ -259,6 +277,7 @@ public class PromptsInterfaz extends javax.swing.JFrame {
 
     /**
      * @param args the command line arguments
+     * Método principal para ejecutar la interfaz.
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
