@@ -5,7 +5,10 @@
 package com.mycompany.trabajoaccdatequipo1;
 
 import static com.mycompany.trabajoaccdatequipo1.TrabajoAccDatEquipo1.interfaz;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
+import javax.persistence.Table;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,8 +21,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PromptsInterfaz extends javax.swing.JFrame {
 
-    private int filaSeleccionada = -1; // -1 indica que no hay ninguna fila seleccionada inicialmente
-    private List<Prompts> listPrompts = MetodosLucas.obtenerTodosLosPrompts();
+    private static int filaSeleccionada = -1; // -1 indica que no hay ninguna fila seleccionada inicialmente
+    private static List<Prompts> listPrompts = MetodosLucas.obtenerTodosLosPrompts();
+    private static DefaultTableModel modelo;
     
     /**
      * Constructor de la clase.
@@ -41,7 +45,7 @@ public class PromptsInterfaz extends javax.swing.JFrame {
         
         listPrompts = MetodosLucas.obtenerTodosLosPrompts();
         
-        DefaultTableModel modelo = (DefaultTableModel) tablaPrompts.getModel();
+        modelo = (DefaultTableModel) tablaPrompts.getModel();
         
         modelo.setRowCount(0);
         
@@ -272,12 +276,28 @@ public class PromptsInterfaz extends javax.swing.JFrame {
 
     private void añadirBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_añadirBotonActionPerformed
         crearPromptInterfaz.main(null);
+        
+        crearPromptInterfaz panel = new crearPromptInterfaz();
+
+        panel.addWindowListener(new WindowAdapter() {
+            
+            public void windowDisposed(WindowEvent e) {
+                cargarDatosEnTabla();
+                System.out.println("yeah");
+            }
+        });
     }//GEN-LAST:event_añadirBotonActionPerformed
 
     private void refrescarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refrescarBotonActionPerformed
+        Metodos.cerrarConexion();
+        Metodos.establecerConexion();
         cargarDatosEnTabla(); 
     }//GEN-LAST:event_refrescarBotonActionPerformed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
+        Metodos.cerrarConexion();
+    }    
+    
     /**
      * @param args the command line arguments
      * Método principal para ejecutar la interfaz.

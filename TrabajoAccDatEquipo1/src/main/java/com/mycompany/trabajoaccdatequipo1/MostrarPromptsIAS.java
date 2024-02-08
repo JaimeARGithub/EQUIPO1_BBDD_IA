@@ -29,6 +29,8 @@ public class MostrarPromptsIAS extends javax.swing.JFrame {
         jTextArea1.setText(texto);
     }
     
+    
+    
     /**
      * 
      * Método inicializador de componentes generado automáticamente por el editor de formularios de Swing.
@@ -49,6 +51,7 @@ public class MostrarPromptsIAS extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
