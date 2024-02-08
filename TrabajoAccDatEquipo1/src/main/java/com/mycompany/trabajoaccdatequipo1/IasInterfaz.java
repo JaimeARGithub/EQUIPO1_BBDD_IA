@@ -206,17 +206,24 @@ public class IasInterfaz extends javax.swing.JFrame {
 
         if (filaSeleccionada >= 0) {
             // Elimina la fila seleccionada del modelo de datos
-            modelo.removeRow(filaSeleccionada);
+            
             int idEncontrado = -1;
             for (Ias ia : iasTabla) {
                 System.out.println(modelo.getValueAt(filaSeleccionada, 0));
                 if (ia.getNombre().equals(modelo.getValueAt(filaSeleccionada, 0))) {
 
                     idEncontrado = ia.getIdia();
+                    
+                    System.out.println(idEncontrado);
+                    System.out.println(ia.getIdia());
                     break;
                 }
             }
+            
+            System.out.println(Metodos.buscarIa(idEncontrado).getIdia());
 
+            modelo.removeRow(filaSeleccionada);
+            
             Metodos.deleteIA(Metodos.buscarIa(idEncontrado).getIdia());
             System.out.println("Eliminado con exito");
         }

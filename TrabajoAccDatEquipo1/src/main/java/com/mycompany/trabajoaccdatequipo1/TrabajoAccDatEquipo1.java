@@ -15,8 +15,10 @@ public class TrabajoAccDatEquipo1 {
         Metodos.establecerConexion();
 
 
+        Metodos.insertarDatos();
+        
         //Metodos.insertarDatos();
-        interfaz();
+        IasInterfaz.main(null);
         //IasInterfaz.main(null);
 
         
