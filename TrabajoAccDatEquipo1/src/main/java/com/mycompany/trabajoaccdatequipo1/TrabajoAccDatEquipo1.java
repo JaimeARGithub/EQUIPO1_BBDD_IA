@@ -16,7 +16,7 @@ public class TrabajoAccDatEquipo1 {
         
         //Metodos.insertarDatos();
         //IasInterfaz.main(null);
-        PromptsInterfaz.main(null);
+        IasInterfaz.main(null);
         //IasInterfaz.main(null);
 
         

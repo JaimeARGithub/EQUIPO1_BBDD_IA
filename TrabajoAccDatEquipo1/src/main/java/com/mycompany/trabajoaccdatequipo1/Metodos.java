@@ -448,9 +448,6 @@ public class Metodos {
      * @return Colección de todas las IAs
      */
     public static Collection<Ias> selectAllIa() {
-        StringBuilder result = new StringBuilder();
-
-        // Realizar la consulta
         TypedQuery<Ias> query = em.createQuery("SELECT i FROM Ias i", Ias.class);
         Collection<Ias> ias = query.getResultList();
 
@@ -526,7 +523,6 @@ public class Metodos {
             Collection<IasPrompts> prompts = ia.getIasPromptsCollection();
             info.append("Prompts asociados:\n");
             for (IasPrompts prompt : prompts) {
-                info.append("    ID del Prompt: ").append(prompt.getIdprompt()).append("\n");
                 info.append("        Texto del Prompt: ").append(prompt.getIdprompt().getTexto()).append("\n");
                 // Agrega cualquier otra información que desees mostrar sobre los prompts
             }
