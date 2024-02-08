@@ -13,9 +13,6 @@ public class TrabajoAccDatEquipo1 {
 
     public static void main(String[] args) {
         Metodos.establecerConexion();
-
-
-        Metodos.insertarDatos();
         
         //Metodos.insertarDatos();
         IasInterfaz.main(null);

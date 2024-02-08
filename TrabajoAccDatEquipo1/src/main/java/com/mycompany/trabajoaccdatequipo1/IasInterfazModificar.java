@@ -30,8 +30,8 @@ public class IasInterfazModificar extends javax.swing.JDialog {
         this.modelo = modelo;
         this.tipo = tipo;
 
-        jTextField2.setText(nombre);
-        jTextField1.setText(modelo);
+        jTextField1.setText(nombre);
+        jTextField2.setText(modelo);
 
         Collection<Tipos> tipos = Metodos.selectAllTipos();
 
