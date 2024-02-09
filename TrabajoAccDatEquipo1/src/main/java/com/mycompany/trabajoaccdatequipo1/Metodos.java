@@ -204,6 +204,15 @@ public class Metodos {
         em.getTransaction().commit();
     }
 
+    
+    /**
+     * Método que realiza una consulta a la base de datos para hallar toda la
+     * información relativa a los tipos de IAs y la devuelve en forma de colección
+     * de objetos.
+     * 
+     * @return Colección de objetos con la información de la tabla Tipos en forma
+     * de colección de objetos Tipos.
+     */
     public static Collection<Tipos> selectAllTipos() {
         TypedQuery<Tipos> query = em.createQuery("select t from Tipos t", Tipos.class);
         return query.getResultList();
@@ -453,6 +462,7 @@ public class Metodos {
 
         return ias;
     }
+    
 
     public static Collection<Ias> selectIasByModelo(String modeloEspecifico) {
         TypedQuery<Ias> query = em.createQuery("SELECT i FROM Ias i WHERE i.modelo = :modelo", Ias.class);
