@@ -204,14 +204,13 @@ public class Metodos {
         em.getTransaction().commit();
     }
 
-    
     /**
      * Método que realiza una consulta a la base de datos para hallar toda la
-     * información relativa a los tipos de IAs y la devuelve en forma de colección
-     * de objetos.
-     * 
-     * @return Colección de objetos con la información de la tabla Tipos en forma
-     * de colección de objetos Tipos.
+     * información relativa a los tipos de IAs y la devuelve en forma de
+     * colección de objetos.
+     *
+     * @return Colección de objetos con la información de la tabla Tipos en
+     * forma de colección de objetos Tipos.
      */
     public static Collection<Tipos> selectAllTipos() {
         TypedQuery<Tipos> query = em.createQuery("select t from Tipos t", Tipos.class);
@@ -427,8 +426,17 @@ public class Metodos {
         em.getTransaction().commit();
     }
 
+    /**
+     * Modifica los atributos de una entidad Ias específica.
+     *
+     * @param iaActual La entidad Ias actual que se va a modificar.
+     * @param nombre El nuevo nombre para la entidad Ias.
+     * @param modelo El nuevo modelo para la entidad Ias.
+     * @param tipo El nuevo tipo para la entidad Ias.
+     */
     public static void modificarIa(Ias iaActual, String nombre, String modelo, String tipo) {
 
+        // Iniciar una transacción para modificar la entidad
         em.getTransaction().begin();
 
         // Comprobamos si el nombre de la IA ya existe en otra IA
@@ -441,13 +449,17 @@ public class Metodos {
         queryTipo.setParameter("tipo", tipo);
         Tipos tipoObjeto = queryTipo.getSingleResult();
 
+        // Buscamos la entidad Ias a modificar
         Ias ia = em.find(Ias.class, iaActual.getIdia(), LockModeType.PESSIMISTIC_READ);
 
-        // Si todo está bien, modificamos la IA
-        ia.setNombre(nombre);
-        ia.setModelo(modelo);
-        ia.setIdtipo(tipoObjeto);
+        // Si la entidad Ias existe, modificamos sus atributos
+        if (ia != null) {
+            ia.setNombre(nombre);
+            ia.setModelo(modelo);
+            ia.setIdtipo(tipoObjeto);
+        }
 
+        // Confirmar la transacción para aplicar los cambios
         em.getTransaction().commit();
     }
 
@@ -462,20 +474,44 @@ public class Metodos {
 
         return ias;
     }
-    
 
+    /**
+     * Busca y devuelve una colección de entidades Ias que coinciden con un
+     * modelo específico.
+     *
+     * @param modeloEspecifico El modelo específico a buscar.
+     * @return Una colección de entidades Ias que coinciden con el modelo
+     * especificado.
+     */
     public static Collection<Ias> selectIasByModelo(String modeloEspecifico) {
         TypedQuery<Ias> query = em.createQuery("SELECT i FROM Ias i WHERE i.modelo = :modelo", Ias.class);
         query.setParameter("modelo", modeloEspecifico);
         return query.getResultList();
     }
 
+    /**
+     * Busca y devuelve una colección de entidades Ias que coinciden con una
+     * popularidad específica.
+     *
+     * @param popularidadEspecifico La popularidad específica a buscar.
+     * @return Una colección de entidades Ias que coinciden con la popularidad
+     * especificada.
+     */
     public static Collection<Ias> selectIasByPopularidad(String popularidadEspecifico) {
         TypedQuery<Ias> query = em.createQuery("SELECT i FROM Ias i WHERE i.popularidad = :popularidad", Ias.class);
         query.setParameter("popularidad", popularidadEspecifico);
         return query.getResultList();
     }
 
+    /**
+     * Busca y devuelve una colección de entidades Ias que coinciden con un
+     * modelo y una popularidad específicos.
+     *
+     * @param modeloEspecifico El modelo específico a buscar.
+     * @param popularidadEspecifico La popularidad específica a buscar.
+     * @return Una colección de entidades Ias que coinciden con el modelo y la
+     * popularidad especificados.
+     */
     public static Collection<Ias> selectIasByModeloYPopularidad(String modeloEspecifico, String popularidadEspecifico) {
         TypedQuery<Ias> query = em.createQuery("SELECT i FROM Ias i WHERE i.modelo = :modelo AND i.popularidad = :popularidad", Ias.class);
         query.setParameter("modelo", modeloEspecifico);
@@ -483,6 +519,12 @@ public class Metodos {
         return query.getResultList();
     }
 
+    /**
+     * Devuelve una colección de entidades Ias únicas, eliminando duplicados
+     * basados en el nombre del modelo.
+     *
+     * @return Una colección de entidades Ias únicas.
+     */
     public static Collection<Ias> selectAllUniqueIa() {
         Map<String, Ias> uniqueIasMap = new HashMap<>(); // Mapa para rastrear modelos únicos por nombre de modelo
 
