@@ -7,6 +7,7 @@ package com.mycompany.trabajoaccdatequipo1;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Collection;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -215,7 +216,38 @@ public class TiposInterfaz extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultarTiposActionPerformed
 
     private void btnEliminarTiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarTiposActionPerformed
-        // TODO add your handling code here:
+        // Se detecta la fila seleccionada por el usuario
+        int filaElegida = tablaTipos.getSelectedRow();
+        
+        if (filaElegida > -1) {
+            // Puesto que la eliminación es una operación destructiva, antes de
+            // realizarla se solicitará confirmación vía diálogo emergente
+            int respuesta = JOptionPane.showConfirmDialog(this, 
+                    "¿Estás seguro de que quieres eliminar este tipo?",
+                    "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+            
+            if (respuesta == JOptionPane.YES_OPTION) {
+                
+                // En caso de que se confirme la eliminación, se busca la ID del tipo seleccionado.
+                // La ID se busca recorriendo la lista de Tipos que utiliza la tabla para obtener
+                // los datos y buscando aquel cuyo nombre coincide con el que hay en el campo tipo
+                // de la tabla en la fila seleccionada (en la columna 0).
+                int idTipoBorrar = -1;
+                for (Tipos e: tiposTabla) {
+                    if ((e.getTipo()).equals(modelo.getValueAt(filaElegida, 0))) {
+                        idTipoBorrar = e.getIdtipo();
+                        break;
+                    }
+                }
+                
+                modelo.removeRow(filaElegida);
+                Metodos.borrarTipo(idTipoBorrar);
+                System.out.println("Eliminado con éxito");
+                
+            } else {
+                System.out.println("Eliminación cancelada");
+            }
+        }
     }//GEN-LAST:event_btnEliminarTiposActionPerformed
 
     /**
