@@ -4,7 +4,11 @@
  */
 package com.mycompany.trabajoaccdatequipo1;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Collection;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -37,6 +41,28 @@ public class TiposInterfaz extends javax.swing.JFrame {
 
         // A la tabla se le pasan como datos la info recogida sobre los tipos
         actualizarTabla();
+        
+        
+        // Para hacer que los botones Modificar, Eliminar y Consultar se deshabiliten y habiliten:
+        // se establece un listener de la selección
+        tablaTipos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                
+                // Si la fila seleccionada es la de posición 0 o más, se habilitan
+                if (tablaTipos.getSelectedRow() > -1) {
+                    btnModificarTipos.setEnabled(true);
+                    btnEliminarTipos.setEnabled(true);
+                    btnConsultarTipos.setEnabled(true);
+                    
+                // Si no, se deshabilitan
+                } else {
+                    btnModificarTipos.setEnabled(false);
+                    btnEliminarTipos.setEnabled(false);
+                    btnConsultarTipos.setEnabled(false);
+                }
+            }
+        } );
     }
 
     /**
@@ -68,6 +94,7 @@ public class TiposInterfaz extends javax.swing.JFrame {
         });
 
         btnModificarTipos.setText("Modificar");
+        btnModificarTipos.setEnabled(false);
         btnModificarTipos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarTiposActionPerformed(evt);
@@ -75,6 +102,7 @@ public class TiposInterfaz extends javax.swing.JFrame {
         });
 
         btnEliminarTipos.setText("Eliminar");
+        btnEliminarTipos.setEnabled(false);
         btnEliminarTipos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarTiposActionPerformed(evt);
@@ -82,6 +110,7 @@ public class TiposInterfaz extends javax.swing.JFrame {
         });
 
         btnConsultarTipos.setText("Consultar");
+        btnConsultarTipos.setEnabled(false);
         btnConsultarTipos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConsultarTiposActionPerformed(evt);
@@ -164,7 +193,17 @@ public class TiposInterfaz extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoTiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoTiposActionPerformed
-        // TODO add your handling code here:
+        tablaTipos.clearSelection();
+        
+        TiposInterfazInsertar dialog = new TiposInterfazInsertar(TiposInterfaz.this, true);
+        
+        dialog.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                actualizarTabla();
+            }
+        });
+        dialog.setVisible(true);
     }//GEN-LAST:event_btnNuevoTiposActionPerformed
 
     private void btnModificarTiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarTiposActionPerformed
