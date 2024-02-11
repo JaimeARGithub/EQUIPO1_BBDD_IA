@@ -212,7 +212,22 @@ public class TiposInterfaz extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarTiposActionPerformed
 
     private void btnConsultarTiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarTiposActionPerformed
-        // TODO add your handling code here:
+        // Recogemos la fila seleccionada de la tabla
+        int filaElegida = tablaTipos.getSelectedRow();
+        
+        if (filaElegida > -1) {
+            for (Tipos e:tiposTabla) {
+                // Se recorre la lista de objetos Tipo (todos los tipos) que la 
+                // tabla de la interfaz utiliza como fuente de datos y se emplea 
+                // aquel Tipo cuyos datos coincidan con el texto existente en la tabla.
+                // Se compara por el campo de la primera columna.
+                if ((e.getTipo()).equals(tablaTipos.getValueAt(filaElegida, 0))) {
+                    TiposInterfazConsulta dialog = new TiposInterfazConsulta(TiposInterfaz.this, true, Metodos.verTipoDatos(e.getIdtipo()));
+                    dialog.setVisible(true);
+                    break;
+                }
+            }
+        }
     }//GEN-LAST:event_btnConsultarTiposActionPerformed
 
     private void btnEliminarTiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarTiposActionPerformed

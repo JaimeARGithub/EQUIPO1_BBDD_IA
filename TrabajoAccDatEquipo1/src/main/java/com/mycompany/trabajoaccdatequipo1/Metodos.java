@@ -218,53 +218,56 @@ public class Metodos {
     }
 
     /**
-     * Método que localiza, SIN USAR JPQL, un tipo en base a su id. Si el tipo
-     * no existe, muestra un mensaje de error. Una vez encontrado, muestra sus
-     * datos y los de la colección de IAs que tenga asociada.
+     * Método que recibe por parámetro el ID de un Tipo y devuelve una String que
+     * contiene toda la información relativa a dicho tipo y a sus relaciones con
+     * la tabla IAs, mostrando los datos de las IAs que tenga asociadas. Si no 
+     * existe un Tipo con el ID introducido, se devuelve un mensaje de error.
      *
-     * @param id id del tipo a encontrar
+     * @param id id del tipo a encontrar, cuya info se mostrará
+     * @return String que contiene toda la información relativa al tipo encontrado
      */
-    public static void verTipoDatos(int id) {
+    public static String verTipoDatos(int id) {
         em.getTransaction().begin();
-
+        
+        StringBuilder datos = new StringBuilder();
+        
         Tipos tipo = null;
         tipo = em.find(Tipos.class, id, LockModeType.PESSIMISTIC_READ);
 
+        
         if (tipo == null) {
-            System.out.println("No existe el tipo con id " + id + ".");
+            datos.append("No se han encontrado tipos con el ID proporcionado.\n");
         } else {
 
-            System.out.println("ID del tipo: " + tipo.getIdtipo());
-            System.out.println("Tipo: " + tipo.getTipo());
-            System.out.println("Descripción: " + tipo.getDescripcion());
-            System.out.println("--------------------------------------------------");
-            System.out.println("--------------------------------------------------");
+            datos.append("Tipo seleccionado: \n").append(tipo.getTipo()).append("\n");
+            datos.append("Descripción: \n").append(tipo.getDescripcion()).append("\n\n\n");
 
             Collection<Ias> colec = tipo.getIasCollection();
+            
             if (colec.isEmpty()) {
-                System.out.println("El tipo con id " + tipo.getIdtipo() + "no tiene IAs asociadas.");
+                datos.append("El tipo no tiene IAs asociadas.");
             } else {
 
-                System.out.println("El tipo con id " + tipo.getIdtipo() + " dispone de IAs asociadas.");
-                System.out.println("");
+                datos.append("El tipo dispone de IAs asociadas.\n\n");
+
                 Ias ia = null;
                 Iterator<Ias> it = colec.iterator();
                 while (it.hasNext()) {
-
+                    
                     ia = it.next();
-                    System.out.println("ID de la IA: " + ia.getIdia());
-                    System.out.println("Nombre de la IA: " + ia.getNombre());
-                    System.out.println("Modelo en que está basada: " + ia.getModelo());
-                    System.out.println("Nº de veces usada: " + ia.getUsos());
-                    System.out.println("Popularidad: " + ia.getPopularidad());
-                    System.out.println("--------------------------------------------------");
+                    datos.append("Nombre de la IA: ").append(ia.getNombre()).append("\n");
+                    datos.append("Modelo en que está basada: ").append(ia.getModelo()).append("\n");
+                    datos.append("Número de usos: ").append(ia.getUsos()).append("\n");
+                    datos.append("Popularidad: ").append(ia.getPopularidad()).append("\n\n");
 
                 }
             }
 
         }
-
+        
         em.getTransaction().commit();
+        
+        return datos.toString();
     }
 
     /**
