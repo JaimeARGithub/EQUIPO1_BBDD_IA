@@ -84,6 +84,11 @@ public class TiposInterfaz extends javax.swing.JFrame {
         tablaTipos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipos"));
 
@@ -208,7 +213,22 @@ public class TiposInterfaz extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoTiposActionPerformed
 
     private void btnModificarTiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarTiposActionPerformed
-        // TODO add your handling code here:
+        int filaElegida = tablaTipos.getSelectedRow();
+        
+        String tipo = tablaTipos.getValueAt(filaElegida, 0).toString();
+        String desc = tablaTipos.getValueAt(filaElegida, 1).toString();
+        
+        TiposInterfazModificar dialog = new TiposInterfazModificar(TiposInterfaz.this, true, tipo, desc, tiposTabla);
+        
+        // Cuando se cierre el dialog para modificaciones, los datos de la tabla se actualizarán
+        dialog.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                actualizarTabla();
+            }
+        });
+
+        dialog.setVisible(true);
     }//GEN-LAST:event_btnModificarTiposActionPerformed
 
     private void btnConsultarTiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarTiposActionPerformed
@@ -264,6 +284,10 @@ public class TiposInterfaz extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnEliminarTiposActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        Metodos.cerrarConexion();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
