@@ -14,14 +14,12 @@ public class TrabajoAccDatEquipo1 {
     public static void main(String[] args) {
         Metodos.establecerConexion();
         
-        //Metodos.insertarDatos();
-        //IasInterfaz.main(null);
-        TiposInterfaz.main(null);
+        interfaz();
         
     }
 
     public static void interfaz() {
-        String[] opciones = {"IAS", "PROMPTS", "TIPOS"};
+        String[] opciones = {"TIPOS", "IAS", "PROMPTS"};
         int opcionSeleccionada = JOptionPane.showOptionDialog(null, "Selecciona una tabla", "Inicio",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opciones, opciones[0]);
 
@@ -29,15 +27,15 @@ public class TrabajoAccDatEquipo1 {
         switch (opcionSeleccionada) {
             case 0:
                 // Acción para la opción 1
-               IasInterfaz.main(null);
+                TiposInterfaz.main(null);
                 break;
             case 1:
                 // Acción para la opción 2
-                PromptsInterfaz.main(null);
+                IasInterfaz.main(null);
                 break;
             case 2:
                 // Acción para la opción 3
-                System.out.println("Seleccionaste la opción 3");
+                PromptsInterfaz.main(null);
                 break;
             default:
                 // Código si se cierra el popup sin seleccionar ninguna opción

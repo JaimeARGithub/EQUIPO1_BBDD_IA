@@ -82,6 +82,7 @@ public class TiposInterfaz extends javax.swing.JFrame {
         btnConsultarTipos = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaTipos = new javax.swing.JTable();
+        btnAtrasTipos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -148,6 +149,13 @@ public class TiposInterfaz extends javax.swing.JFrame {
             tablaTipos.getColumnModel().getColumn(1).setResizable(false);
         }
 
+        btnAtrasTipos.setText("Atrás");
+        btnAtrasTipos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasTiposActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -158,7 +166,8 @@ public class TiposInterfaz extends javax.swing.JFrame {
                     .addComponent(btnNuevoTipos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnModificarTipos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnEliminarTipos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnConsultarTipos, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
+                    .addComponent(btnConsultarTipos, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                    .addComponent(btnAtrasTipos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1)
                 .addContainerGap())
@@ -174,7 +183,9 @@ public class TiposInterfaz extends javax.swing.JFrame {
                 .addComponent(btnEliminarTipos)
                 .addGap(18, 18, 18)
                 .addComponent(btnConsultarTipos)
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                .addComponent(btnAtrasTipos)
+                .addContainerGap())
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
@@ -289,6 +300,11 @@ public class TiposInterfaz extends javax.swing.JFrame {
         Metodos.cerrarConexion();
     }//GEN-LAST:event_formWindowClosing
 
+    private void btnAtrasTiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasTiposActionPerformed
+        dispose();
+        TrabajoAccDatEquipo1.interfaz();
+    }//GEN-LAST:event_btnAtrasTiposActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -351,6 +367,7 @@ public class TiposInterfaz extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtrasTipos;
     private javax.swing.JButton btnConsultarTipos;
     private javax.swing.JButton btnEliminarTipos;
     private javax.swing.JButton btnModificarTipos;

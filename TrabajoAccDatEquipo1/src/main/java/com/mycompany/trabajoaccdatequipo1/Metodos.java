@@ -21,6 +21,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -162,6 +163,7 @@ public class Metodos {
         try {
 
             tipoBusca = query.getSingleResult();
+            JOptionPane.showMessageDialog(null, "Ya existe un tipo con ese nombre en la base de datos.");
             System.out.println("Ya existe un tipo con ese nombre en la base de datos.");
 
         } catch (NoResultException e) {
@@ -420,6 +422,7 @@ public class Metodos {
         query.setParameter("nombre", iaActual.getNombre());
         Collection<Ias> iasConMismoNombre = query.getResultList();
         if (!iasConMismoNombre.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El nombre de la IA ya existe.");
             System.out.println("El nombre de la IA ya existe.");
             return;
         }

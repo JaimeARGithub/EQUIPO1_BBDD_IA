@@ -63,6 +63,7 @@
                       <Component id="btnModificarTipos" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnEliminarTipos" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnConsultarTipos" pref="116" max="32767" attributes="0"/>
+                      <Component id="btnAtrasTipos" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane1" max="32767" attributes="0"/>
@@ -81,7 +82,9 @@
                   <Component id="btnEliminarTipos" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnConsultarTipos" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="123" max="32767" attributes="0"/>
+                  <EmptySpace pref="87" max="32767" attributes="0"/>
+                  <Component id="btnAtrasTipos" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
               <Component id="jScrollPane1" alignment="0" pref="0" max="32767" attributes="0"/>
           </Group>
@@ -159,6 +162,14 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JButton" name="btnAtrasTipos">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Atr&#xe1;s"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAtrasTiposActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>
