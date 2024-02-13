@@ -15,7 +15,6 @@ public class TrabajoAccDatEquipo1 {
         Metodos.establecerConexion();
         
         interfaz();
-        
     }
 
     public static void interfaz() {
@@ -42,7 +41,5 @@ public class TrabajoAccDatEquipo1 {
                 System.out.println("No seleccionaste ninguna opción");
                 break;
         }
-    }
-    
-    
+    }  
 }

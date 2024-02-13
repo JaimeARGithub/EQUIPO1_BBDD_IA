@@ -20,6 +20,7 @@ import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.swing.JOptionPane;
 
@@ -716,5 +717,126 @@ public class Metodos {
         } else {
             ia.setPopularidad("Muy popular.");
         }
+    }
+    
+    /**
+     * Método que ajusta el campo "Popularidad" de las IAs almacenadas, ajustándole
+     * un valor de entre varios predefinidos en función del número de usos que tengan.
+     * 
+     * Método usado en las actualizaciones masivas, en las que es posible modificar el
+     * valor del número de usos de una IA.
+     */
+    public static void ajustarPopularidad() {
+        
+        Query query1 = em.createQuery("update Ias a set a.popularidad='No popular.' where a.usos<4");
+        Query query2 = em.createQuery("update Ias a set a.popularidad='Moderadamente popular.' where a.usos>=4 and a.usos<8");
+        Query query3 = em.createQuery("update Ias a set a.popularidad='Popular.' where a.usos>=8 and a.usos<12");
+        Query query4 = em.createQuery("update Ias a set a.popularidad='Muy popular.' where a.usos>=12");
+        
+        query1.executeUpdate();
+        query2.executeUpdate();
+        query3.executeUpdate();
+        query4.executeUpdate();
+        
+        em.getTransaction().commit();
+    }
+    
+    /**
+     * Método que realiza una modificación de múltiples registros IA de la base de
+     * datos, filtrando según aquellos cuyos modelo y/o popularidad se indiquen
+     * y asignando los valores que se introduzcan por parámetro a los campos de
+     * modelo y número de usos. Al final, se ajustan las popularidades de las IAs
+     * modificadas en función del nuevo número de usos.
+     * Si modelo está vacío, sólo se ajusta número de usos.
+     * Si número de usos es menor que cero, sólo se ajusta modelo.
+     * En los filtros de modelo y popularidad, si valen "-", ese filtro no se usa.
+     * 
+     * @param modelo Nuevo valor a establecer para el campo modelo
+     * @param numUsos Nuevo valor a establecer para el campo número de usos
+     * @param modeloFiltro Modelo por el que se filtrarán las IAs a modificar
+     * @param popularidadFiltro Popularidad por la que se filtrarán las IAs a modificar
+     */
+    public static void modificacionMasiva(String modelo, int numUsos, String modeloFiltro, String popularidadFiltro) {
+        Query query = null;
+        
+        // Cuando no se filtre por modelo ni por popularidad
+        if (modeloFiltro.equals("-") && popularidadFiltro.equals("-")) {
+
+            if (numUsos<0) {
+                query = em.createQuery("update Ias set modelo=:modeloP");
+                query.setParameter("modeloP", modelo);
+            } else if (modelo.isEmpty()) {
+                query = em.createQuery("update Ias set usos=:usosP");
+                query.setParameter("usosP", numUsos);
+            } else {
+                query = em.createQuery("update Ias set modelo=:modeloP, usos=:usosP");
+                query.setParameter("modeloP", modelo);
+                query.setParameter("usosP", numUsos);
+            }
+            
+        // Cuando no se filtre por modelo
+        } else if (modeloFiltro.equals("-")) {
+        
+            if (numUsos<0) {
+                query = em.createQuery("update Ias set modelo=:modeloP where popularidad=:popuP");
+                query.setParameter("modeloP", modelo);
+                query.setParameter("popuP", popularidadFiltro);
+            } else if (modelo.isEmpty()) {
+                query = em.createQuery("update Ias set usos=:usosP where popularidad=:popuP");
+                query.setParameter("usosP", numUsos);
+                query.setParameter("popuP", popularidadFiltro);
+            } else {
+                query = em.createQuery("update Ias set modelo=:modeloP, usos=:usosP where popularidad=:popuP");
+                query.setParameter("modeloP", modelo);
+                query.setParameter("usosP", numUsos);
+                query.setParameter("popuP", popularidadFiltro);
+            }
+            
+        // Cuando no se filtre por popularidad
+        } else if (popularidadFiltro.equals("-")) {
+        
+            if (numUsos<0) {
+                query = em.createQuery("update Ias set modelo=:modeloP where modelo=:modeP");
+                query.setParameter("modeloP", modelo);
+                query.setParameter("modeP", modeloFiltro);
+            } else if (modelo.isEmpty()) {
+                query = em.createQuery("update Ias set usos=:usosP where modelo=:modeP");
+                query.setParameter("usosP", numUsos);
+                query.setParameter("modeP", modeloFiltro);
+            } else {
+                query = em.createQuery("update Ias set modelo=:modeloP, usos=:usosP where modelo=:modeP");
+                query.setParameter("modeloP", modelo);
+                query.setParameter("usosP", numUsos);
+                query.setParameter("modeP", modeloFiltro);
+            }
+            
+        // Cuando se filtre por modelo y popularidad
+        } else {
+            
+            if (numUsos<0) {
+                query = em.createQuery("update Ias set modelo=:modeloP where popularidad=:popuP and modelo=:modeP");
+                query.setParameter("modeloP", modelo);
+                query.setParameter("popuP", popularidadFiltro);
+                query.setParameter("modeP", modeloFiltro);
+            } else if (modelo.isEmpty()) {
+                query = em.createQuery("update Ias set usos=:usosP where popularidad=:popuP and modelo=:modeP");
+                query.setParameter("usosP", numUsos);
+                query.setParameter("popuP", popularidadFiltro);
+                query.setParameter("modeP", modeloFiltro);
+            } else {
+                query = em.createQuery("update Ias set modelo=:modeloP, usos=:usosP where popularidad=:popuP and modelo=:modeP");
+                query.setParameter("modeloP", modelo);
+                query.setParameter("usosP", numUsos);
+                query.setParameter("popuP", popularidadFiltro);
+                query.setParameter("modeP", modeloFiltro);
+            }
+            
+        }
+        
+        
+        em.getTransaction().begin();
+        query.executeUpdate();
+        
+        ajustarPopularidad();
     }
 }
