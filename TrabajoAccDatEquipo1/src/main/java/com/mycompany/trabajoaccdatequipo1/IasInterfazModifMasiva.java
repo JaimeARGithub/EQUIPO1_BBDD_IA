@@ -16,12 +16,6 @@ import javax.swing.event.DocumentEvent;
  */
 public class IasInterfazModifMasiva extends javax.swing.JDialog {
 
-    // Establecemos un contador de concurrencia, dado que se va a implementar un
-    // hilo para que el dialog de modificaciones masivas no se cierre hasta que
-    // se hayan aplicado todos los cambios a la base de datos
-    // Se ha hecho a la vista de que hay problemas para actualizar la interfaz
-    // de usuario tras una modificación masiva
-    private CountDownLatch latch = new CountDownLatch(1);
     
     /**
      * Creates new form IasInterfazModifMasiva
@@ -49,8 +43,6 @@ public class IasInterfazModifMasiva extends javax.swing.JDialog {
         
         // Si ambos están a "no modificar", para forzar al usuario a cumplimentar
         // al menos un campo, el botón de aceptar estará deshabilitado.
-        btnAceptar.setEnabled(false);
-        
         txtModelo.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -218,20 +210,11 @@ public class IasInterfazModifMasiva extends javax.swing.JDialog {
         // Se desactiva el botón de aceptar para evitar que el usuario le vuelva a dar
         btnAceptar.setEnabled(false);
     
-        // Se realizan las modificaciones en la base de datos en un hilo separado
-        new Thread(() -> {
-            Metodos.modificacionMasiva(modelo, numUsos, modeloFiltro, popularidadFiltro);
-        
-            // Cuando la operación termina, se suma uno al contador
-            latch.countDown();
-        }).start();
-    
-        // El contador espera a alcanzar su valor máximo establecido (1)
-        try {
-            latch.await();
-        } catch (InterruptedException ex) {
-            ex.printStackTrace(); // Maneja la interrupción si es necesario
-        }
+        // Y se aplican las modificaciones con un cierre y apertura de conexión para
+        // que los cambios se vean reflejados
+        Metodos.modificacionMasiva(modelo, numUsos, modeloFiltro, popularidadFiltro);
+        Metodos.cerrarConexion();
+        Metodos.establecerConexion();
     
         // Cuando todo termina se cierra la ventana
         dispose();

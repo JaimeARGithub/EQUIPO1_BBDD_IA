@@ -727,7 +727,7 @@ public class Metodos {
      * valor del número de usos de una IA.
      */
     public static void ajustarPopularidad() {
-        
+        em.getTransaction().begin();
         Query query1 = em.createQuery("update Ias a set a.popularidad='No popular.' where a.usos<4");
         Query query2 = em.createQuery("update Ias a set a.popularidad='Moderadamente popular.' where a.usos>=4 and a.usos<8");
         Query query3 = em.createQuery("update Ias a set a.popularidad='Popular.' where a.usos>=8 and a.usos<12");
@@ -758,6 +758,8 @@ public class Metodos {
      */
     public static void modificacionMasiva(String modelo, int numUsos, String modeloFiltro, String popularidadFiltro) {
         Query query = null;
+        
+        em.getTransaction().begin();
         
         // Cuando no se filtre por modelo ni por popularidad
         if (modeloFiltro.equals("-") && popularidadFiltro.equals("-")) {
@@ -834,8 +836,8 @@ public class Metodos {
         }
         
         
-        em.getTransaction().begin();
         query.executeUpdate();
+        em.getTransaction().commit();
         
         ajustarPopularidad();
     }

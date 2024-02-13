@@ -395,7 +395,7 @@ public class IasInterfaz extends javax.swing.JFrame {
 
         // Llenar la tabla con los datos actualizados
         for (Ias objetoIa : iasTabla) {
-            System.out.println(objetoIa.getNombre() + " --- " + objetoIa.getModelo());
+            System.out.println(" --- " + objetoIa.getModelo());
             String nombre = objetoIa.getNombre();
             String modeloIa = objetoIa.getModelo();
             int numeroUsos = objetoIa.getUsos();

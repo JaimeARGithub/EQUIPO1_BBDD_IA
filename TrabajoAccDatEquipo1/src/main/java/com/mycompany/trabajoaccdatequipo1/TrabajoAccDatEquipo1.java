@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 public class TrabajoAccDatEquipo1 {
 
     public static void main(String[] args) {
-        //Metodos.establecerConexion();
+        Metodos.establecerConexion();
         
         interfaz();
     }
