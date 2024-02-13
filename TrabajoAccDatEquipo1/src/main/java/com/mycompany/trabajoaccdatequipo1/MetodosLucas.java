@@ -163,4 +163,22 @@ public class MetodosLucas {
         
         return ias;
     }
+    
+    /**
+    * Método para eliminar todas las instancias de IAs en la base de datos.
+    */
+    public static void eliminarTodasLasIas() {
+        // Obtener una lista de todas las IAs desde la base de datos
+        List<Ias> lista = (List<Ias>) Metodos.selectAllIa();
+        // Variable para almacenar el ID de la IA a borrar
+        int idBorrar;
+
+        // Iterar sobre cada IA en la lista
+        for (Ias ia : lista) {
+            // Obtener el ID de la IA actual
+            idBorrar = ia.getIdia();
+            // Llamar al método para eliminar la IA de la base de datos
+            Metodos.deleteIA(idBorrar);
+        }
+    }
 }

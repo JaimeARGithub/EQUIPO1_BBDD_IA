@@ -76,6 +76,7 @@ public class IasInterfaz extends javax.swing.JFrame {
         jToggleButton2 = new javax.swing.JToggleButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        borrarMasivoBoton = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -162,6 +163,13 @@ public class IasInterfaz extends javax.swing.JFrame {
             }
         });
 
+        borrarMasivoBoton.setText("Eliminacion Masiva");
+        borrarMasivoBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                borrarMasivoBotonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -175,7 +183,10 @@ public class IasInterfaz extends javax.swing.JFrame {
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(borrarMasivoBoton)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -197,7 +208,9 @@ public class IasInterfaz extends javax.swing.JFrame {
                         .addComponent(jToggleButton2)
                         .addGap(18, 18, 18)
                         .addComponent(jButton6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(borrarMasivoBoton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                         .addComponent(jButton7))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
@@ -348,6 +361,17 @@ public class IasInterfaz extends javax.swing.JFrame {
         TrabajoAccDatEquipo1.interfaz();
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void borrarMasivoBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarMasivoBotonActionPerformed
+        int confirmacion = JOptionPane.showConfirmDialog(this, 
+                "¿Estás seguro de que deseas eliminar TODAS las IAs?", "Confirmar eliminación", 
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                    MetodosLucas.eliminarTodasLasIas();
+                    actualizarTabla(); 
+            }   
+    }//GEN-LAST:event_borrarMasivoBotonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -430,6 +454,7 @@ public class IasInterfaz extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton borrarMasivoBoton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
