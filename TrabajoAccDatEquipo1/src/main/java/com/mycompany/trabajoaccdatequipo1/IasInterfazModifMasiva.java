@@ -5,6 +5,7 @@
 package com.mycompany.trabajoaccdatequipo1;
 
 import java.util.Collection;
+import java.util.concurrent.CountDownLatch;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
@@ -15,6 +16,13 @@ import javax.swing.event.DocumentEvent;
  */
 public class IasInterfazModifMasiva extends javax.swing.JDialog {
 
+    // Establecemos un contador de concurrencia, dado que se va a implementar un
+    // hilo para que el dialog de modificaciones masivas no se cierre hasta que
+    // se hayan aplicado todos los cambios a la base de datos
+    // Se ha hecho a la vista de que hay problemas para actualizar la interfaz
+    // de usuario tras una modificación masiva
+    private CountDownLatch latch = new CountDownLatch(1);
+    
     /**
      * Creates new form IasInterfazModifMasiva
      */
@@ -206,7 +214,26 @@ public class IasInterfazModifMasiva extends javax.swing.JDialog {
         String modeloFiltro = listaModelos.getSelectedItem().toString();
         String popularidadFiltro = listaPopularidad.getSelectedItem().toString();
         
-        Metodos.modificacionMasiva(modelo, numUsos, modeloFiltro, popularidadFiltro);
+        
+        // Se desactiva el botón de aceptar para evitar que el usuario le vuelva a dar
+        btnAceptar.setEnabled(false);
+    
+        // Se realizan las modificaciones en la base de datos en un hilo separado
+        new Thread(() -> {
+            Metodos.modificacionMasiva(modelo, numUsos, modeloFiltro, popularidadFiltro);
+        
+            // Cuando la operación termina, se suma uno al contador
+            latch.countDown();
+        }).start();
+    
+        // El contador espera a alcanzar su valor máximo establecido (1)
+        try {
+            latch.await();
+        } catch (InterruptedException ex) {
+            ex.printStackTrace(); // Maneja la interrupción si es necesario
+        }
+    
+        // Cuando todo termina se cierra la ventana
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 

@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
 public class IasInterfaz extends javax.swing.JFrame {
 
     public static Collection<Ias> iasTabla = Metodos.selectAllIa();
-    DefaultTableModel modelo;
+    static DefaultTableModel modelo;
 
     /**
      * Creates new form IAS_Interfaz
@@ -320,6 +320,14 @@ public class IasInterfaz extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         IasInterfazModifMasiva dialog = new IasInterfazModifMasiva(IasInterfaz.this, true);
+        
+        dialog.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                actualizarTabla();
+            }
+        });
+        
         dialog.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -359,7 +367,7 @@ public class IasInterfaz extends javax.swing.JFrame {
         });
     }
 
-    public void actualizarTabla() {
+    public static void actualizarTabla() {
         // Borrar todas las filas existentes
         while (modelo.getRowCount() > 0) {
             modelo.removeRow(0);

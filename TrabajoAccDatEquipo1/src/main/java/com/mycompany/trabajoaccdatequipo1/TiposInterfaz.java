@@ -226,8 +226,8 @@ public class TiposInterfaz extends javax.swing.JFrame {
     private void btnModificarTiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarTiposActionPerformed
         int filaElegida = tablaTipos.getSelectedRow();
         
-        String tipo = tablaTipos.getValueAt(filaElegida, 0).toString();
-        String desc = tablaTipos.getValueAt(filaElegida, 1).toString();
+        String tipo = modelo.getValueAt(filaElegida, 0).toString();
+        String desc = modelo.getValueAt(filaElegida, 1).toString();
         
         TiposInterfazModificar dialog = new TiposInterfazModificar(TiposInterfaz.this, true, tipo, desc, tiposTabla);
         
@@ -252,7 +252,7 @@ public class TiposInterfaz extends javax.swing.JFrame {
                 // tabla de la interfaz utiliza como fuente de datos y se emplea 
                 // aquel Tipo cuyos datos coincidan con el texto existente en la tabla.
                 // Se compara por el campo de la primera columna.
-                if ((e.getTipo()).equals(tablaTipos.getValueAt(filaElegida, 0))) {
+                if ((e.getTipo()).equals(modelo.getValueAt(filaElegida, 0))) {
                     TiposInterfazConsulta dialog = new TiposInterfazConsulta(TiposInterfaz.this, true, Metodos.verTipoDatos(e.getIdtipo()));
                     dialog.setVisible(true);
                     break;
