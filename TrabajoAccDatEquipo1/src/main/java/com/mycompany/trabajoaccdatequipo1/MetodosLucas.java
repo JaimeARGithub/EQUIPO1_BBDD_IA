@@ -65,6 +65,7 @@ public class MetodosLucas {
      * @return Una cadena de texto que contiene los detalles del prompt y sus IAs asociadas.
      */
     public static String mostrarPromptsYIasAsociadas(int id){
+        em.getTransaction().begin();
         
         StringBuilder resultado = new StringBuilder();
         Prompts prompt = em.find(Prompts.class, id);
@@ -92,6 +93,8 @@ public class MetodosLucas {
         } catch (NoResultException e) {
             resultado.append("No existen usuarios\n");
         }
+        
+        em.getTransaction().commit();
         
         return resultado.toString();
     }   

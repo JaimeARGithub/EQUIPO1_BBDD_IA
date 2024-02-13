@@ -15,6 +15,8 @@ public class TrabajoAccDatEquipo1 {
         Metodos.establecerConexion();
         
         interfaz();
+        //Metodos.insertarDatos();
+        //Metodos.cerrarConexion();
     }
 
     public static void interfaz() {
