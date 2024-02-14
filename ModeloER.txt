@@ -1,0 +1,15 @@
+PASO A E/R
+
+TIPOS(IdTipo, Tipo, Descripción)
+Clave primaria: IdTipo
+
+IAS(IdIA, Nombre, Modelo, Usos, Popularidad, IdTipo)
+Clave primaria: IdIA
+Clave ajena: IdTipo(TIPOS)
+
+PROMPTS(IdPrompt, Texto)
+Clave primaria: IdPrompt
+
+IAS_PROMPTS(IdRegistro, IdIA, IdPrompt)
+Clave primaria: IdRegistro
+Clave ajena: IdIA(IAS), IdPrompt(PROMPTS)
