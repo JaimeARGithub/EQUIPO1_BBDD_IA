@@ -285,9 +285,10 @@ public class Metodos {
      *
      * @param id id del tipo a borrar
      */
-    public static void borrarTipo(int id) {
+    public static boolean borrarTipo(int id) {
         em.getTransaction().begin();
         Tipos tipo = null;
+        boolean borrado = false;
 
         // Se busca el tipo
         tipo = em.find(Tipos.class, id, LockModeType.PESSIMISTIC_READ);
@@ -307,16 +308,18 @@ public class Metodos {
             if (colec.isEmpty()) {
                 em.remove(tipo);
                 System.out.println("El tipo con id " + id + " se ha borrado correctamente.");
+                borrado =  true;
+                
                 // Si no    
             } else {
-                System.out.println("No es posible borrar ese registro.");
-                System.out.println("¡¡Existen otros registros que dependen de él!!");
-                System.out.println("Borra esos registros e inténtalo de nuevo.");
+                JOptionPane.showMessageDialog(null, "No es posible borrar ese registro. ¡¡Existen otros registros que dependen de él!! Borra esos registros e inténtalo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+                borrado = false;
             }
 
         }
 
         em.getTransaction().commit();
+        return borrado;
     }
 
     /**

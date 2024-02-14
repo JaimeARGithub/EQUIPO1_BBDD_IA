@@ -286,8 +286,11 @@ public class TiposInterfaz extends javax.swing.JFrame {
                     }
                 }
                 
-                modelo.removeRow(filaElegida);
-                Metodos.borrarTipo(idTipoBorrar);
+                boolean borrado = Metodos.borrarTipo(idTipoBorrar);
+                
+                if (borrado) {
+                    modelo.removeRow(filaElegida);
+                }
                 System.out.println("Eliminado con éxito");
                 
             } else {
