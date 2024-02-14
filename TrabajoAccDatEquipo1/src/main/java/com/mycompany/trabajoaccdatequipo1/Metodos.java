@@ -889,10 +889,9 @@ public class Metodos {
                 em.getTransaction().rollback();
             }
             // Mostrar mensaje emergente (popup)
-            JOptionPane.showMessageDialog(null, "Error en la eliminación masiva; no puedes eliminar IAs que sean la unica IA asociada a un prompt", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error en la eliminación masiva; no puedes eliminar IAs de las que dependan prompts. Borra sus prompts asociados e inténtalo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
 }
 
         

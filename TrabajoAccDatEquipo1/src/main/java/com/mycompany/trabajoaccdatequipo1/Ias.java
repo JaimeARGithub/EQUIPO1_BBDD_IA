@@ -47,7 +47,7 @@ public class Ias implements Serializable {
     private int usos;
     @Column(name = "POPULARIDAD")
     private String popularidad;
-    @OneToMany(mappedBy = "idia")
+    @OneToMany(mappedBy = "idia", orphanRemoval=true)
     private Collection<IasPrompts> iasPromptsCollection;
     @JoinColumn(name = "IDTIPO", referencedColumnName = "IDTIPO")
     @ManyToOne
