@@ -390,6 +390,9 @@ public class Metodos {
         }
 
         em.getTransaction().commit();
+        
+        Metodos.cerrarConexion();
+        Metodos.establecerConexion();
     }
 
     /**
@@ -429,6 +432,7 @@ public class Metodos {
         if (!iasConMismoNombre.isEmpty()) {
             JOptionPane.showMessageDialog(null, "El nombre de la IA ya existe.");
             System.out.println("El nombre de la IA ya existe.");
+            em.getTransaction().commit();
             return;
         }
 
