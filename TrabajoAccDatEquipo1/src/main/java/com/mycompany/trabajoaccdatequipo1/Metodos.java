@@ -5,6 +5,7 @@
 package com.mycompany.trabajoaccdatequipo1;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -841,4 +842,55 @@ public class Metodos {
         
         ajustarPopularidad();
     }
+    
+    public static void eliminacionMasiva(String modeloFiltro, String popularidadFiltro) {
+        Query query = null;
+
+        em.getTransaction().begin();
+
+         try {  
+        // Cuando no se filtre por modelo
+        if (modeloFiltro.equals("-")) {
+        
+            query = em.createQuery("delete from Ias where popularidad=:popuP");
+            
+            query.setParameter("popuP", popularidadFiltro);
+                
+        // Cuando no se filtre por popularidad
+        } else if (popularidadFiltro.equals("-")) {
+        
+            query = em.createQuery("delete from Ias where modelo=:modeP");
+            query.setParameter("modeP", modeloFiltro);
+           
+        // Cuando se filtre por modelo y popularidad
+        } else {
+            
+            query = em.createQuery("delete from Ias where popularidad=:popuP and modelo=:modeP");
+
+            query.setParameter("popuP", popularidadFiltro);
+            query.setParameter("modeP", modeloFiltro);
+
+        }
+        query.executeUpdate();
+        em.getTransaction().commit();
+        }catch (Exception e) {
+            // Manejo de excepciones
+            System.out.println("excepcion");
+            e.printStackTrace();
+            // Si ocurrió un error, realiza rollback de la transacción
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            // Mostrar mensaje emergente (popup)
+            JOptionPane.showMessageDialog(null, "Error en la eliminación masiva; no puedes eliminar IAs que sean la unica IA asociada a un prompt", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
 }
+
+        
+        
+        
+
+    
+

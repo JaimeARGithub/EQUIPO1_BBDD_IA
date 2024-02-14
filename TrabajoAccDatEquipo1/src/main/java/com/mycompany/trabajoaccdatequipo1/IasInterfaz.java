@@ -362,14 +362,17 @@ public class IasInterfaz extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void borrarMasivoBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarMasivoBotonActionPerformed
-        int confirmacion = JOptionPane.showConfirmDialog(this, 
-                "¿Estás seguro de que deseas eliminar TODAS las IAs?", "Confirmar eliminación", 
-                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-            
-            if (confirmacion == JOptionPane.YES_OPTION) {
-                    MetodosLucas.eliminarTodasLasIas();
-                    actualizarTabla(); 
-            }   
+        
+        IasInterfazElimMasiva dialog = new IasInterfazElimMasiva(IasInterfaz.this, true);
+        
+                dialog.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                actualizarTabla();
+            }
+        });
+        
+        dialog.setVisible(true);
     }//GEN-LAST:event_borrarMasivoBotonActionPerformed
 
     /**

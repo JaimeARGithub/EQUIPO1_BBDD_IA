@@ -175,6 +175,9 @@ public class MetodosLucas {
 
         // Iterar sobre cada IA en la lista
         for (Ias ia : lista) {
+            
+            
+            
             // Obtener el ID de la IA actual
             idBorrar = ia.getIdia();
             // Llamar al método para eliminar la IA de la base de datos

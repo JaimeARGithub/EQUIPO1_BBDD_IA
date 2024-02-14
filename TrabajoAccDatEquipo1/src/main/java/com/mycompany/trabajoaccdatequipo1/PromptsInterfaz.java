@@ -222,7 +222,6 @@ public class PromptsInterfaz extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     // Gestores de eventos para los botones y la tabla.
-    
     private void atrasBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasBotonActionPerformed
         dispose();
         interfaz();
